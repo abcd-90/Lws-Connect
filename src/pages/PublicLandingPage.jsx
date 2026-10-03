@@ -4,7 +4,6 @@ import { Navbar } from '../components/common/Navbar';
 import { Footer } from '../components/common/Footer';
 import { useTheme } from '../theme/ThemeProvider';
 import { useAuth } from '../context/AuthContext';
-import { GoogleAuthModal } from '../components/common/GoogleAuthModal';
 import { apiFetch } from '../utils/api';
 import { 
   MessageSquare, 
