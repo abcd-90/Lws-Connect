@@ -2,16 +2,17 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Logo } from '../components/common/Logo';
 import { useAuth } from '../context/AuthContext';
+import { GoogleAuthModal } from '../components/common/GoogleAuthModal';
 import { AlertCircle, ArrowRight } from 'lucide-react';
 
 export function LoginPage() {
-  const { login, loginWithGoogle } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
   const [emailOrUsername, setEmailOrUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const [submitting, setSubmitting] = useState(false);
-  const [googleLoading, setGoogleLoading] = useState(false);
+  const [googleModalOpen, setGoogleModalOpen] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,19 +31,6 @@ export function LoginPage() {
       setError(err.message || 'Invalid email/username or password');
     } finally {
       setSubmitting(false);
-    }
-  };
-
-  const handleGoogleSignIn = async () => {
-    setGoogleLoading(true);
-    setError(null);
-    try {
-      await loginWithGoogle({});
-      navigate('/app/messages');
-    } catch (err) {
-      setError(err.message || 'Google Sign-In failed');
-    } finally {
-      setGoogleLoading(false);
     }
   };
 
@@ -68,8 +56,7 @@ export function LoginPage() {
         <div className="space-y-3">
           <button
             type="button"
-            onClick={handleGoogleSignIn}
-            disabled={googleLoading}
+            onClick={() => setGoogleModalOpen(true)}
             className="w-full py-3 px-4 bg-white hover:bg-slate-100 text-slate-950 font-bold text-xs sm:text-sm rounded-xl shadow-md flex items-center justify-center gap-3 transition-all cursor-pointer border border-slate-200"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -90,7 +77,7 @@ export function LoginPage() {
                 d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
               />
             </svg>
-            <span>{googleLoading ? 'Signing in with Google...' : 'Continue with Google (1-Click)'}</span>
+            <span>Continue with Google (1-Click)</span>
           </button>
 
           <div className="relative flex items-center justify-center">
@@ -143,6 +130,11 @@ export function LoginPage() {
           </Link>
         </div>
       </div>
+
+      <GoogleAuthModal
+        isOpen={googleModalOpen}
+        onClose={() => setGoogleModalOpen(false)}
+      />
     </div>
   );
 }

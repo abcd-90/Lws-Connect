@@ -132,6 +132,33 @@ router.post('/users/:id/unblock', (req, res) => {
   }
 });
 
+// Admin Open/Create Conversation with specific User
+router.post('/conversations/open-user/:userId', (req, res) => {
+  try {
+    const targetUserId = req.params.userId;
+    const targetUser = db.prepare('SELECT id, full_name, email FROM users WHERE id = ?').get(targetUserId);
+    if (!targetUser) {
+      return res.status(404).json({ error: 'Target user not found' });
+    }
+
+    let conv = db.prepare('SELECT id FROM conversations WHERE user_id = ?').get(targetUserId);
+    if (!conv) {
+      const convId = `conv_${Date.now()}_${require('crypto').randomBytes(4).toString('hex')}`;
+      db.prepare(`
+        INSERT INTO conversations (id, user_id, status, priority, assigned_to)
+        VALUES (?, ?, 'active', 'normal', ?)
+      `).run(convId, targetUserId, req.user.id);
+      conv = { id: convId };
+    }
+
+    return res.json({ conversation_id: conv.id });
+  } catch (err) {
+    console.error('Error opening user conversation:', err);
+    return res.status(500).json({ error: 'Failed to open conversation with user' });
+  }
+});
+
+
 // Update Conversation Status or Priority
 router.put('/conversations/:id', (req, res) => {
   try {

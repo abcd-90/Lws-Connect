@@ -4,6 +4,7 @@ import { Navbar } from '../components/common/Navbar';
 import { Footer } from '../components/common/Footer';
 import { useTheme } from '../theme/ThemeProvider';
 import { useAuth } from '../context/AuthContext';
+import { GoogleAuthModal } from '../components/common/GoogleAuthModal';
 import { apiFetch } from '../utils/api';
 import { 
   MessageSquare, 
@@ -20,10 +21,11 @@ import {
 
 export function PublicLandingPage() {
   const { theme } = useTheme();
-  const { user, loginWithGoogle } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [faqs, setFaqs] = useState([]);
   const [openFaq, setOpenFaq] = useState(null);
+  const [googleModalOpen, setGoogleModalOpen] = useState(false);
 
   useEffect(() => {
     async function loadFaqs() {
@@ -73,16 +75,11 @@ export function PublicLandingPage() {
 
             <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
               <button
-                onClick={async () => {
+                onClick={() => {
                   if (user) {
                     navigate('/app/messages');
                   } else {
-                    try {
-                      await loginWithGoogle({});
-                      navigate('/app/messages');
-                    } catch (err) {
-                      navigate('/register');
-                    }
+                    setGoogleModalOpen(true);
                   }
                 }}
                 className="px-5 py-3.5 text-xs sm:text-sm font-bold bg-white hover:bg-slate-100 text-slate-950 rounded-xl shadow-lg flex items-center justify-center gap-2.5 transition-all cursor-pointer border border-slate-200"
@@ -356,6 +353,11 @@ export function PublicLandingPage() {
       </section>
 
       <Footer />
+
+      <GoogleAuthModal
+        isOpen={googleModalOpen}
+        onClose={() => setGoogleModalOpen(false)}
+      />
     </div>
   );
 }
