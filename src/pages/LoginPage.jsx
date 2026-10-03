@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Logo } from '../components/common/Logo';
 import { useAuth } from '../context/AuthContext';
-import { Shield, AlertCircle, ArrowRight, UserCheck } from 'lucide-react';
+import { AlertCircle, ArrowRight } from 'lucide-react';
 
 export function LoginPage() {
   const { login } = useAuth();
@@ -26,15 +26,10 @@ export function LoginPage() {
         navigate('/app/messages');
       }
     } catch (err) {
-      setError(err.message || 'Login failed');
+      setError(err.message || 'Invalid email/username or password');
     } finally {
       setSubmitting(false);
     }
-  };
-
-  const fillDemoAccount = (email, pass) => {
-    setEmailOrUsername(email);
-    setPassword(pass);
   };
 
   return (
@@ -46,35 +41,6 @@ export function LoginPage() {
           </div>
           <h2 className="text-2xl font-bold text-white tracking-tight">Sign In to LWS Direct</h2>
           <p className="text-xs text-slate-400">Access your private creator conversation space</p>
-        </div>
-
-        {/* Quick Demo Credentials Panel */}
-        <div className="p-4 bg-[#0B0E14] border border-amber-500/30 rounded-xl space-y-3">
-          <p className="text-[11px] font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
-            <Shield className="w-3.5 h-3.5" /> Quick Demo Login Fill
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
-            <button
-              type="button"
-              onClick={() => fillDemoAccount('admin@lwsconnect.com', 'LwsSecureAdmin#2026!')}
-              className="p-3 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 rounded-xl text-left transition cursor-pointer"
-            >
-              <span className="font-bold block text-xs flex items-center gap-1">
-                <UserCheck className="w-3.5 h-3.5 text-emerald-400" /> Sami (Admin)
-              </span>
-              <span className="text-[10px] text-slate-400 block truncate mt-1">admin@lwsconnect.com</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => fillDemoAccount('student@learnwithsami.com', 'StudentPass123!')}
-              className="p-3 bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 rounded-xl text-left transition cursor-pointer"
-            >
-              <span className="font-bold block text-xs flex items-center gap-1">
-                <UserCheck className="w-3.5 h-3.5 text-amber-400" /> Tariq (Student)
-              </span>
-              <span className="text-[10px] text-slate-400 block truncate mt-1">student@learnwithsami.com</span>
-            </button>
-          </div>
         </div>
 
         {error && (
@@ -112,7 +78,7 @@ export function LoginPage() {
           <button
             type="submit"
             disabled={submitting}
-            className="lws-btn-amber w-full flex items-center justify-center gap-2"
+            className="lws-btn-amber w-full flex items-center justify-center gap-2 cursor-pointer"
           >
             {submitting ? 'Signing in...' : 'Sign In'}
             <ArrowRight className="w-4 h-4" />
