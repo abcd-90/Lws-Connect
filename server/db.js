@@ -1,13 +1,36 @@
 const Database = require('better-sqlite3');
 const path = require('path');
+const fs = require('fs');
+const os = require('os');
 const bcrypt = require('bcryptjs');
 
-const dbPath = path.join(__dirname, '..', 'lws_direct.db');
-const db = new Database(dbPath);
+let dbPath;
+if (process.env.VERCEL || process.env.NODE_ENV === 'production') {
+  dbPath = path.join(os.tmpdir(), 'lws_direct.db');
+  const localDb = path.join(__dirname, '..', 'lws_direct.db');
+  if (!fs.existsSync(dbPath) && fs.existsSync(localDb)) {
+    try {
+      fs.copyFileSync(localDb, dbPath);
+    } catch (e) {
+      console.warn('Could not copy local DB to tmp:', e.message);
+    }
+  }
+} else {
+  dbPath = path.join(__dirname, '..', 'lws_direct.db');
+}
 
-// Enable WAL mode for high performance
-db.pragma('journal_mode = WAL');
-db.pragma('foreign_keys = ON');
+let db;
+try {
+  db = new Database(dbPath);
+  if (!process.env.VERCEL) {
+    try { db.pragma('journal_mode = WAL'); } catch (e) {}
+  }
+  db.pragma('foreign_keys = ON');
+} catch (err) {
+  console.warn('Failed to open disk database, falling back to memory database:', err.message);
+  db = new Database(':memory:');
+  db.pragma('foreign_keys = ON');
+}
 
 function initDb() {
   db.exec(`

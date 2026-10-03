@@ -13,10 +13,17 @@ export async function apiFetch(endpoint, options = {}) {
     headers
   });
 
-  const data = await response.json();
+  let data;
+  const contentType = response.headers.get('content-type') || '';
+  if (contentType.includes('application/json')) {
+    data = await response.json();
+  } else {
+    const text = await response.text();
+    data = { error: text || 'Server returned an invalid non-JSON response.' };
+  }
 
   if (!response.ok) {
-    throw new Error(data.error || 'An error occurred while processing request.');
+    throw new Error(data.error || data.message || 'An error occurred while processing request.');
   }
 
   return data;
@@ -35,7 +42,15 @@ export async function uploadFile(file) {
     body: formData
   });
 
-  const data = await response.json();
+  let data;
+  const contentType = response.headers.get('content-type') || '';
+  if (contentType.includes('application/json')) {
+    data = await response.json();
+  } else {
+    const text = await response.text();
+    data = { error: text || 'File upload failed with invalid response.' };
+  }
+
   if (!response.ok) {
     throw new Error(data.error || 'File upload failed');
   }
