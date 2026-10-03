@@ -16,12 +16,15 @@ export function UserChatPage() {
 
   const loadConversations = async () => {
     try {
-      await apiFetch('/chat/conversations/ensure', { method: 'POST' });
+      const ensureRes = await apiFetch('/chat/conversations/ensure', { method: 'POST' });
       const data = await apiFetch('/chat/conversations');
       const convList = data.conversations || [];
       setConversations(convList);
-      if (convList.length > 0 && !activeConvId) {
-        setActiveConvId(convList[0].id);
+
+      // Auto-open active conversation on screen
+      const activeId = ensureRes?.conversation_id || (convList.length > 0 ? convList[0].id : null);
+      if (activeId) {
+        setActiveConvId(activeId);
       }
     } catch (err) {
       console.error('Error ensuring conversation:', err);
@@ -59,7 +62,7 @@ export function UserChatPage() {
 
           <div className="flex items-center gap-2 px-3 py-1 bg-[#0B0809] border border-red-500/20 rounded-lg text-xs text-slate-300">
             <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-            <span className="font-bold text-white">{user?.full_name}</span>
+            <span className="font-bold text-white">{user?.full_name || user?.username}</span>
           </div>
 
           <button
@@ -94,7 +97,7 @@ export function UserChatPage() {
             />
           ) : (
             <div className="h-full flex items-center justify-center text-slate-400 text-sm font-medium">
-              Select a conversation to start messaging
+              Loading conversation room...
             </div>
           )}
         </div>

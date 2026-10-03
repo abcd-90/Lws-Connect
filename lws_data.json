@@ -10,7 +10,7 @@
       "status": "active",
       "bio": "Official Learn With Sami creator account.",
       "created_at": "2026-10-03T14:15:20.871Z",
-      "last_active_at": "2026-10-03T15:50:50.207Z"
+      "last_active_at": "2026-10-03T15:58:40.047Z"
     },
     {
       "id": "usr-student-demo",
@@ -205,6 +205,19 @@
       "bio": null,
       "created_at": "2026-10-03T15:50:50.338Z",
       "last_active_at": "2026-10-03T15:50:50.338Z"
+    },
+    {
+      "id": "usr_1791043120066_109e6f15",
+      "email": "testuser_1791043120059@example.com",
+      "password_hash": "$2b$10$yCRmY1ioKWq2HL87uUozael6tlMn6fGQQfwSB7F5cUmmmeIiyn6iq",
+      "full_name": "Test Community Member",
+      "username": "testuser_1791043120059",
+      "avatar_url": null,
+      "role": "user",
+      "status": "active",
+      "bio": null,
+      "created_at": "2026-10-03T15:58:40.171Z",
+      "last_active_at": "2026-10-03T15:58:40.171Z"
     }
   ],
   "conversations": [
@@ -342,6 +355,15 @@
       "assigned_to": "usr-sami-admin",
       "created_at": "2026-10-03T15:50:50.341Z",
       "updated_at": "2026-10-03T15:50:50.394Z"
+    },
+    {
+      "id": "conv_1791043120174_30488e36",
+      "user_id": "usr_1791043120066_109e6f15",
+      "status": "usr-sami-admin",
+      "priority": "normal",
+      "assigned_to": "usr-sami-admin",
+      "created_at": "2026-10-03T15:58:40.175Z",
+      "updated_at": "2026-10-03T15:58:40.219Z"
     }
   ],
   "messages": [
@@ -740,6 +762,33 @@
       "message_type": "text",
       "status": "sent",
       "created_at": "2026-10-03T15:50:50.394Z"
+    },
+    {
+      "id": "msg_1791043120177_fec01409",
+      "conversation_id": "conv_1791043120174_30488e36",
+      "sender_id": "usr-sami-admin",
+      "body": "Assalamu Alaikum Test Community Member! Welcome to LWS Direct. You have a direct 1-on-1 channel with Learn With Sami. Feel free to ask any question or leave feedback.",
+      "message_type": "text",
+      "status": "sent",
+      "created_at": "2026-10-03T15:58:40.177Z"
+    },
+    {
+      "id": "msg_1791043120201_efb18bc2",
+      "conversation_id": "conv_1791043120174_30488e36",
+      "sender_id": "usr_1791043120066_109e6f15",
+      "body": "Hello Sami! Testing message functionality.",
+      "message_type": "text",
+      "status": "sent",
+      "created_at": "2026-10-03T15:58:40.202Z"
+    },
+    {
+      "id": "msg_1791043120218_4c6c9590",
+      "conversation_id": "conv_1791043120174_30488e36",
+      "sender_id": "usr-sami-admin",
+      "body": "Wa Alaikum Assalam! Admin response verified.",
+      "message_type": "text",
+      "status": "sent",
+      "created_at": "2026-10-03T15:58:40.219Z"
     }
   ],
   "message_attachments": [],
@@ -1058,6 +1107,24 @@
       "type": "/app/messages",
       "is_read": 0,
       "created_at": "2026-10-03T15:50:50.401Z"
+    },
+    {
+      "id": "notif_1791043120207_0a1e8711",
+      "user_id": "usr-sami-admin",
+      "title": "New message from Test Community Member",
+      "body": "Hello Sami! Testing message functionality.",
+      "type": "/admin/conversations",
+      "is_read": 0,
+      "created_at": "2026-10-03T15:58:40.208Z"
+    },
+    {
+      "id": "notif_1791043120225_a93fafdf",
+      "user_id": "usr_1791043120066_109e6f15",
+      "title": "Reply from Sami",
+      "body": "Wa Alaikum Assalam! Admin response verified.",
+      "type": "/app/messages",
+      "is_read": 0,
+      "created_at": "2026-10-03T15:58:40.225Z"
     }
   ],
   "blocked_users": [],
@@ -1482,6 +1549,36 @@
       "metadata": "{\"version\":1}",
       "ip_address": "127.0.0.1",
       "created_at": "2026-10-03T15:50:50.427Z"
+    },
+    {
+      "id": "audit_1791043120050_712537fe",
+      "actor_id": "usr-sami-admin",
+      "action": "USER_LOGIN",
+      "target_type": "user",
+      "target_id": "usr-sami-admin",
+      "metadata": "{\"role\":\"super_admin\"}",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-10-03T15:58:40.051Z"
+    },
+    {
+      "id": "audit_1791043120181_27f03708",
+      "actor_id": "usr_1791043120066_109e6f15",
+      "action": "USER_REGISTERED",
+      "target_type": "user",
+      "target_id": "usr_1791043120066_109e6f15",
+      "metadata": "{\"email\":\"testuser_1791043120059@example.com\",\"username\":\"testuser_1791043120059\"}",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-10-03T15:58:40.181Z"
+    },
+    {
+      "id": "audit_1791043120247_7e5902c7",
+      "actor_id": "usr-sami-admin",
+      "action": "THEME_PUBLISHED",
+      "target_type": "theme",
+      "target_id": "theme_v1_1791043120241",
+      "metadata": "{\"version\":1}",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-10-03T15:58:40.248Z"
     }
   ],
   "brand_settings": [
@@ -1504,7 +1601,7 @@
       "hero_subheadline": "Skip cluttered social DMs and public forums. LWS Direct provides a secure 1-on-1 workspace to ask questions, review code, and connect directly with Sami — without publicly exposing personal numbers.",
       "hero_cta_text": "Start a Conversation",
       "footer_text": "© 2026 Learn With Sami. All rights reserved.",
-      "updated_at": "2026-10-03T15:50:50.424Z"
+      "updated_at": "2026-10-03T15:58:40.245Z"
     }
   ],
   "theme_versions": [
@@ -1602,9 +1699,16 @@
     {
       "id": "theme_v1_1791042650421",
       "version_num": 1,
-      "status": "{\"brand_name\":\"LWS Direct Custom\",\"tagline\":\"Direct Creator Channel\",\"primary_color\":\"#1E293B\",\"secondary_color\":\"#0284C7\",\"accent_color\":\"#10B981\",\"bg_color\":\"#0B0F19\",\"surface_color\":\"#161F32\",\"text_color\":\"#F8FAFC\",\"font_family\":\"Plus Jakarta Sans, sans-serif\",\"button_radius\":\"10px\",\"card_radius\":\"16px\",\"hero_headline\":\"Connect Directly with Learn With Sami\",\"hero_subheadline\":\"Private 1-on-1 creator platform.\",\"hero_cta_text\":\"Start Messaging Now\",\"footer_text\":\"© 2026 Learn With Sami.\"}",
+      "status": "archived",
       "config_json": "usr-sami-admin",
       "created_at": "2026-10-03T15:50:50.421Z"
+    },
+    {
+      "id": "theme_v1_1791043120241",
+      "version_num": 1,
+      "status": "{\"brand_name\":\"LWS Direct Custom\",\"tagline\":\"Direct Creator Channel\",\"primary_color\":\"#1E293B\",\"secondary_color\":\"#0284C7\",\"accent_color\":\"#10B981\",\"bg_color\":\"#0B0F19\",\"surface_color\":\"#161F32\",\"text_color\":\"#F8FAFC\",\"font_family\":\"Plus Jakarta Sans, sans-serif\",\"button_radius\":\"10px\",\"card_radius\":\"16px\",\"hero_headline\":\"Connect Directly with Learn With Sami\",\"hero_subheadline\":\"Private 1-on-1 creator platform.\",\"hero_cta_text\":\"Start Messaging Now\",\"footer_text\":\"© 2026 Learn With Sami.\"}",
+      "config_json": "usr-sami-admin",
+      "created_at": "2026-10-03T15:58:40.241Z"
     }
   ],
   "faq_items": [

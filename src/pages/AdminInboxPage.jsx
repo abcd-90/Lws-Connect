@@ -16,8 +16,8 @@ export function AdminInboxPage() {
       const data = await apiFetch('/chat/conversations');
       const list = data.conversations || [];
       setConversations(list);
-      if (list.length > 0 && !activeConvId) {
-        setActiveConvId(list[0].id);
+      if (list.length > 0) {
+        setActiveConvId(prev => prev || list[0].id);
       }
     } catch (err) {
       console.error('Failed to load conversations:', err);
@@ -53,35 +53,29 @@ export function AdminInboxPage() {
   };
 
   return (
-    <div className="flex h-screen bg-[#090D16] text-slate-100 font-sans overflow-hidden">
+    <div className="flex h-screen bg-[#0B0809] text-white font-sans overflow-hidden">
       <AdminSidebar />
 
       <main className="flex-1 flex flex-col h-full overflow-hidden">
         {/* Top Header Filter Bar */}
-        <div className="h-14 bg-[#0B0F17] border-b border-white/10 px-6 flex items-center justify-between shrink-0">
+        <div className="h-14 bg-[#140D0F] border-b border-red-500/20 px-6 flex items-center justify-between shrink-0">
           <h2 className="font-bold text-sm text-white flex items-center gap-2">
-            <Shield className="w-4 h-4 text-[#0284C7]" /> Sami's Creator Inbox
+            <Shield className="w-4 h-4 text-red-500" /> Sami's Creator Inbox
           </h2>
 
           <div className="flex items-center gap-2 text-xs">
             <Filter className="w-3.5 h-3.5 text-slate-400" />
             <button
               onClick={() => setFilterStatus('all')}
-              className={`px-3 py-1 rounded-lg transition ${filterStatus === 'all' ? 'bg-[#0284C7] text-white font-semibold' : 'text-slate-400 hover:text-white'}`}
+              className={`px-3 py-1 rounded-lg transition cursor-pointer ${filterStatus === 'all' ? 'bg-red-600 text-white font-bold' : 'text-slate-400 hover:text-white'}`}
             >
-              All
+              All ({conversations.length})
             </button>
             <button
               onClick={() => setFilterStatus('unread')}
-              className={`px-3 py-1 rounded-lg transition ${filterStatus === 'unread' ? 'bg-[#0284C7] text-white font-semibold' : 'text-slate-400 hover:text-white'}`}
+              className={`px-3 py-1 rounded-lg transition cursor-pointer ${filterStatus === 'unread' ? 'bg-red-600 text-white font-bold' : 'text-slate-400 hover:text-white'}`}
             >
               Unread
-            </button>
-            <button
-              onClick={() => setFilterStatus('archived')}
-              className={`px-3 py-1 rounded-lg transition ${filterStatus === 'archived' ? 'bg-[#0284C7] text-white font-semibold' : 'text-slate-400 hover:text-white'}`}
-            >
-              Archived
             </button>
           </div>
         </div>
@@ -115,34 +109,30 @@ export function AdminInboxPage() {
 
             {/* User Metadata Inspector Sidebar */}
             {activeConvObj && (
-              <div className="w-72 bg-[#0B0F17] border-l border-white/10 p-4 space-y-6 hidden lg:block overflow-y-auto">
-                <div className="text-center space-y-2 pb-4 border-b border-white/10">
-                  <div className="w-16 h-16 mx-auto rounded-full bg-slate-800 flex items-center justify-center text-xl font-bold text-white border border-white/10">
+              <div className="w-72 bg-[#140D0F] border-l border-red-500/20 p-4 space-y-6 hidden lg:block overflow-y-auto">
+                <div className="text-center space-y-2 pb-4 border-b border-red-500/20">
+                  <div className="w-16 h-16 mx-auto rounded-full bg-red-950/80 border border-red-500/50 flex items-center justify-center text-xl font-bold text-white shadow-md">
                     {(activeConvObj.user_full_name || 'U').charAt(0).toUpperCase()}
                   </div>
                   <h4 className="font-bold text-sm text-white">{activeConvObj.user_full_name || 'User'}</h4>
-                  <p className="text-xs text-slate-400">@{activeConvObj.user_username}</p>
-                  <p className="text-[11px] text-slate-500">{activeConvObj.user_email}</p>
+                  <p className="text-xs text-red-400 font-mono">@{activeConvObj.user_username}</p>
+                  <p className="text-[11px] text-slate-300 font-mono font-bold">{activeConvObj.user_email}</p>
                 </div>
 
                 <div className="space-y-3 text-xs">
-                  <h5 className="font-bold text-slate-300 uppercase tracking-wider text-[10px]">User Info</h5>
-                  <div className="flex justify-between py-1 border-b border-white/5">
+                  <h5 className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">User Info</h5>
+                  <div className="flex justify-between py-1.5 border-b border-red-500/10">
                     <span className="text-slate-400">Status</span>
-                    <span className={`font-semibold ${activeConvObj.user_status === 'active' ? 'text-emerald-400' : 'text-rose-400'}`}>
+                    <span className={`font-bold ${activeConvObj.user_status === 'active' ? 'text-emerald-400' : 'text-rose-400'}`}>
                       {activeConvObj.user_status}
                     </span>
-                  </div>
-                  <div className="flex justify-between py-1 border-b border-white/5">
-                    <span className="text-slate-400">Priority</span>
-                    <span className="font-semibold text-slate-200 capitalize">{activeConvObj.priority || 'normal'}</span>
                   </div>
                 </div>
 
                 <div className="pt-4 space-y-2">
                   <button
                     onClick={() => handleBlockUser(activeConvObj.user_id)}
-                    className="w-full py-2 bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/30 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition"
+                    className="w-full py-2 bg-red-950/60 hover:bg-red-900/80 text-red-300 border border-red-500/40 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition cursor-pointer"
                   >
                     <Ban className="w-3.5 h-3.5" /> Block User
                   </button>
