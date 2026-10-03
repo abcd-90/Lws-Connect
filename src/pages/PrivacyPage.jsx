@@ -5,19 +5,19 @@ import { Lock, ShieldCheck } from 'lucide-react';
 
 export function PrivacyPage() {
   return (
-    <div className="min-h-screen bg-[#090D16] text-[#F9FAFB] flex flex-col font-sans">
+    <div className="min-h-screen bg-[#0B0809] text-white flex flex-col font-sans selection:bg-red-600 selection:text-white">
       <Navbar />
 
-      <main className="flex-1 py-16 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto space-y-8">
+      <main className="flex-1 py-16 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto space-y-8 w-full">
         <div className="space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/40 text-emerald-400 text-xs font-semibold border border-emerald-500/30">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 text-red-400 text-xs font-bold border border-red-500/30">
             <Lock className="w-3.5 h-3.5" /> Privacy First Platform
           </div>
-          <h1 className="text-3xl font-extrabold font-display text-white">Privacy Policy</h1>
-          <p className="text-xs text-slate-400">Effective Date: October 2026</p>
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">Privacy Policy</h1>
+          <p className="text-xs text-slate-400 font-mono">Effective Date: October 2026</p>
         </div>
 
-        <div className="glass-card p-8 space-y-6 text-xs text-slate-300 leading-relaxed border border-white/10">
+        <div className="bg-[#140D0F] border border-red-500/20 rounded-2xl p-6 sm:p-8 space-y-6 text-xs text-slate-300 leading-relaxed shadow-md">
           <section className="space-y-2">
             <h3 className="text-base font-bold text-white">1. Protection of Phone Numbers</h3>
             <p>
@@ -26,9 +26,9 @@ export function PrivacyPage() {
           </section>
 
           <section className="space-y-2">
-            <h3 className="text-base font-bold text-white">2. Data Storage & Encryption</h3>
+            <h3 className="text-base font-bold text-white">2. Data Storage & Security</h3>
             <p>
-              All messages, profile information, and attachment metadata are stored securely inside our database. Passwords are encrypted using salted bcrypt hashing.
+              All messages, profile information, and attachment metadata are stored securely inside our persistent database. Passwords are encrypted using salted bcrypt hashing.
             </p>
           </section>
 
