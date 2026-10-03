@@ -18,12 +18,12 @@ export function RegisterPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!fullName || !username || !email || !password) return;
+    if (!email || !username) return;
 
     setSubmitting(true);
     setError(null);
     try {
-      await register(fullName, username, email, password);
+      await register(fullName || username, username, email, 'lws12345');
       navigate('/app/messages');
     } catch (err) {
       setError(err.message || 'Registration failed');
@@ -86,61 +86,40 @@ export function RegisterPage() {
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-3.5">
-          <div className="space-y-1">
-            <label className="block text-xs font-semibold text-slate-300">Full Name</label>
-            <input
-              type="text"
-              required
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-              placeholder="e.g. Tariq Ahmad"
-              className="w-full bg-[#0B0809] border border-red-500/20 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all"
-            />
-          </div>
-
-          <div className="space-y-1">
-            <label className="block text-xs font-semibold text-slate-300">Username</label>
-            <input
-              type="text"
-              required
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="e.g. tariq_dev"
-              className="w-full bg-[#0B0809] border border-red-500/20 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all"
-            />
-          </div>
-
-          <div className="space-y-1">
-            <label className="block text-xs font-semibold text-slate-300">Email Address</label>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="space-y-1 font-sans">
+            <label className="block text-xs font-semibold text-slate-300">Your Email Address</label>
             <input
               type="email"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="e.g. tariq@example.com"
-              className="w-full bg-[#0B0809] border border-red-500/20 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all"
+              placeholder="e.g. user@gmail.com"
+              className="w-full bg-[#0B0809] border border-red-500/20 rounded-xl px-4 py-3 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all"
             />
           </div>
 
-          <div className="space-y-1">
-            <label className="block text-xs font-semibold text-slate-300">Password</label>
+          <div className="space-y-1 font-sans">
+            <label className="block text-xs font-semibold text-slate-300">Username / Full Name</label>
             <input
-              type="password"
+              type="text"
               required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="At least 6 characters"
-              className="w-full bg-[#0B0809] border border-red-500/20 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all"
+              value={username}
+              onChange={(e) => {
+                setUsername(e.target.value);
+                setFullName(e.target.value);
+              }}
+              placeholder="e.g. Sheikh Sami"
+              className="w-full bg-[#0B0809] border border-red-500/20 rounded-xl px-4 py-3 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all"
             />
           </div>
 
           <button
             type="submit"
             disabled={submitting}
-            className="w-full py-3 bg-red-600 hover:bg-red-500 text-white font-bold text-xs sm:text-sm rounded-xl shadow-lg shadow-red-600/30 flex items-center justify-center gap-2 transition-all disabled:opacity-50 cursor-pointer"
+            className="w-full py-3.5 bg-red-600 hover:bg-red-500 text-white font-bold text-xs sm:text-sm rounded-xl shadow-lg shadow-red-600/30 flex items-center justify-center gap-2 transition-all disabled:opacity-50 cursor-pointer"
           >
-            {submitting ? 'Creating account...' : 'Create Account'}
+            {submitting ? 'Creating Account & Starting Chat...' : 'Create Account & Start 1-on-1 Chat'}
             <ArrowRight className="w-4 h-4" />
           </button>
         </form>

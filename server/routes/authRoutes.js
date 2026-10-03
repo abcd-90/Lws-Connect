@@ -8,73 +8,73 @@ const logAuditEvent = require('../middleware/audit');
 
 const router = express.Router();
 
-// Register new user
+// Register new user (Ultra Fast: Just Email & Username)
 router.post('/register', (req, res) => {
   try {
-    const { full_name, username, email, password } = req.body;
+    let { full_name, username, email, password } = req.body || {};
 
-    if (!full_name || !username || !email || !password) {
-      return res.status(400).json({ error: 'All fields (full_name, username, email, password) are required.' });
+    if (!email || !email.trim()) {
+      return res.status(400).json({ error: 'Email address is required.' });
     }
 
-    if (password.length < 6) {
-      return res.status(400).json({ error: 'Password must be at least 6 characters long.' });
+    const cleanEmail = email.trim().toLowerCase();
+    const cleanUsername = (username && username.trim()) ? username.trim().toLowerCase().replace(/[^a-z0-9_]/g, '') : cleanEmail.split('@')[0];
+    const displayName = (full_name && full_name.trim()) ? full_name.trim() : cleanUsername;
+    const finalPassword = (password && password.length >= 6) ? password : 'lws12345';
+
+    // If user already exists by email, auto-authenticate seamlessly
+    let user = db.prepare('SELECT * FROM users WHERE email = ?').get(cleanEmail);
+
+    if (user) {
+      db.prepare('UPDATE users SET last_active_at = CURRENT_TIMESTAMP WHERE id = ?').run(user.id);
+    } else {
+      const userId = `usr_${Date.now()}_${crypto.randomBytes(4).toString('hex')}`;
+      const salt = bcrypt.genSaltSync(10);
+      const passwordHash = bcrypt.hashSync(finalPassword, salt);
+
+      // Check unique username collision
+      let finalUsername = cleanUsername;
+      const existingUser = db.prepare('SELECT id FROM users WHERE username = ?').get(finalUsername);
+      if (existingUser) {
+        finalUsername = `${cleanUsername}_${Math.floor(1000 + Math.random() * 9000)}`;
+      }
+
+      db.prepare(`
+        INSERT INTO users (id, email, password_hash, full_name, username, role, status)
+        VALUES (?, ?, ?, ?, ?, 'user', 'active')
+      `).run(userId, cleanEmail, passwordHash, displayName, finalUsername);
+
+      user = db.prepare('SELECT id, email, full_name, username, avatar_url, role, status, bio, created_at FROM users WHERE id = ?').get(userId);
     }
 
-    // Check if email or username already exists
-    const existingEmail = db.prepare('SELECT id FROM users WHERE email = ?').get(email.toLowerCase());
-    if (existingEmail) {
-      return res.status(400).json({ error: 'Email address is already registered.' });
+    // Always guarantee conversation exists
+    let conv = db.prepare('SELECT id FROM conversations WHERE user_id = ?').get(user.id);
+    if (!conv) {
+      const convId = `conv_${Date.now()}_${crypto.randomBytes(4).toString('hex')}`;
+      const adminUser = db.prepare("SELECT id FROM users WHERE role = 'super_admin' OR role = 'admin' LIMIT 1").get();
+      const assignedAdminId = adminUser ? adminUser.id : 'usr-sami-admin';
+
+      db.prepare(`
+        INSERT INTO conversations (id, user_id, status, priority, assigned_to)
+        VALUES (?, ?, 'active', 'normal', ?)
+      `).run(convId, user.id, assignedAdminId);
+
+      const msgId = `msg_${Date.now()}_${crypto.randomBytes(4).toString('hex')}`;
+      db.prepare(`
+        INSERT INTO messages (id, conversation_id, sender_id, body, message_type, status)
+        VALUES (?, ?, ?, ?, 'system', 'read')
+      `).run(msgId, convId, assignedAdminId, `Assalamu Alaikum ${user.full_name}! Welcome to LWS Direct. You have a direct 1-on-1 channel with Learn With Sami. Feel free to ask any question or leave feedback.`);
     }
 
-    const existingUsername = db.prepare('SELECT id FROM users WHERE username = ?').get(username.toLowerCase());
-    if (existingUsername) {
-      return res.status(400).json({ error: 'Username is already taken.' });
-    }
+    logAuditEvent(user.id, 'USER_REGISTERED', 'user', user.id, { email: user.email, username: user.username }, req);
 
-    const userId = `usr_${Date.now()}_${crypto.randomBytes(4).toString('hex')}`;
-    const salt = bcrypt.genSaltSync(10);
-    const passwordHash = bcrypt.hashSync(password, salt);
-
-    db.prepare(`
-      INSERT INTO users (id, email, password_hash, full_name, username, role, status)
-      VALUES (?, ?, ?, ?, ?, 'user', 'active')
-    `).run(userId, email.toLowerCase(), passwordHash, full_name, username.toLowerCase());
-
-    // Create automatic initial conversation with Sami
-    const convId = `conv_${Date.now()}_${crypto.randomBytes(4).toString('hex')}`;
-    const adminUser = db.prepare("SELECT id FROM users WHERE role = 'super_admin' OR role = 'admin' LIMIT 1").get();
-    const assignedAdminId = adminUser ? adminUser.id : 'usr-sami-admin';
-
-    db.prepare(`
-      INSERT INTO conversations (id, user_id, status, priority, assigned_to)
-      VALUES (?, ?, 'active', 'normal', ?)
-    `).run(convId, userId, assignedAdminId);
-
-    // Initial welcome system message
-    const msgId = `msg_${Date.now()}_${crypto.randomBytes(4).toString('hex')}`;
-    db.prepare(`
-      INSERT INTO messages (id, conversation_id, sender_id, body, message_type, status)
-      VALUES (?, ?, ?, ?, 'system', 'read')
-    `).run(msgId, convId, assignedAdminId, `Welcome to LWS Direct, ${full_name}! You have a direct line to Learn With Sami. Feel free to ask any question or leave feedback.`);
-
-    // Notification for user
-    const notifId = `notif_${Date.now()}_${crypto.randomBytes(4).toString('hex')}`;
-    db.prepare(`
-      INSERT INTO notifications (id, user_id, title, body, type, link_url)
-      VALUES (?, ?, 'Account Created', 'Welcome to LWS Direct! Your private conversation room is ready.', 'system', '/app/messages')
-    `).run(notifId, userId);
-
-    logAuditEvent(userId, 'USER_REGISTERED', 'user', userId, { email, username }, req);
-
-    const token = jwt.sign({ id: userId, email: email.toLowerCase(), role: 'user' }, JWT_SECRET, { expiresIn: '7d' });
-
-    const userObj = db.prepare('SELECT id, email, full_name, username, avatar_url, role, status, bio, created_at FROM users WHERE id = ?').get(userId);
+    const token = jwt.sign({ id: user.id, email: user.email, role: user.role }, JWT_SECRET, { expiresIn: '7d' });
+    const { password_hash, ...userWithoutPassword } = user;
 
     return res.status(201).json({
-      message: 'Account registered successfully',
+      message: 'Account created successfully',
       token,
-      user: userObj
+      user: userWithoutPassword
     });
   } catch (err) {
     console.error('Registration error:', err);
