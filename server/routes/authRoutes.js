@@ -8,44 +8,44 @@ const logAuditEvent = require('../middleware/audit');
 
 const router = express.Router();
 
-// Register new user (Ultra Fast: Just Email & Username)
+// Register new user (Standard Email, Username & Password)
 router.post('/register', (req, res) => {
   try {
-    let { full_name, username, email, password } = req.body || {};
+    const { full_name, username, email, password } = req.body || {};
 
-    if (!email || !email.trim()) {
-      return res.status(400).json({ error: 'Email address is required.' });
+    if (!full_name || !username || !email || !password) {
+      return res.status(400).json({ error: 'All fields (full_name, username, email, password) are required.' });
+    }
+
+    if (password.length < 6) {
+      return res.status(400).json({ error: 'Password must be at least 6 characters long.' });
     }
 
     const cleanEmail = email.trim().toLowerCase();
-    const cleanUsername = (username && username.trim()) ? username.trim().toLowerCase().replace(/[^a-z0-9_]/g, '') : cleanEmail.split('@')[0];
-    const displayName = (full_name && full_name.trim()) ? full_name.trim() : cleanUsername;
-    const finalPassword = (password && password.length >= 6) ? password : 'lws12345';
+    const cleanUsername = username.trim().toLowerCase();
 
-    // If user already exists by email, auto-authenticate seamlessly
-    let user = db.prepare('SELECT * FROM users WHERE email = ?').get(cleanEmail);
-
-    if (user) {
-      db.prepare('UPDATE users SET last_active_at = CURRENT_TIMESTAMP WHERE id = ?').run(user.id);
-    } else {
-      const userId = `usr_${Date.now()}_${crypto.randomBytes(4).toString('hex')}`;
-      const salt = bcrypt.genSaltSync(10);
-      const passwordHash = bcrypt.hashSync(finalPassword, salt);
-
-      // Check unique username collision
-      let finalUsername = cleanUsername;
-      const existingUser = db.prepare('SELECT id FROM users WHERE username = ?').get(finalUsername);
-      if (existingUser) {
-        finalUsername = `${cleanUsername}_${Math.floor(1000 + Math.random() * 9000)}`;
-      }
-
-      db.prepare(`
-        INSERT INTO users (id, email, password_hash, full_name, username, role, status)
-        VALUES (?, ?, ?, ?, ?, 'user', 'active')
-      `).run(userId, cleanEmail, passwordHash, displayName, finalUsername);
-
-      user = db.prepare('SELECT id, email, full_name, username, avatar_url, role, status, bio, created_at FROM users WHERE id = ?').get(userId);
+    // Check existing email
+    const existingEmail = db.prepare('SELECT id FROM users WHERE email = ?').get(cleanEmail);
+    if (existingEmail) {
+      return res.status(400).json({ error: 'Email address is already registered.' });
     }
+
+    // Check existing username
+    const existingUsername = db.prepare('SELECT id FROM users WHERE username = ?').get(cleanUsername);
+    if (existingUsername) {
+      return res.status(400).json({ error: 'Username is already taken.' });
+    }
+
+    const userId = `usr_${Date.now()}_${crypto.randomBytes(4).toString('hex')}`;
+    const salt = bcrypt.genSaltSync(10);
+    const passwordHash = bcrypt.hashSync(password, salt);
+
+    db.prepare(`
+      INSERT INTO users (id, email, password_hash, full_name, username, role, status)
+      VALUES (?, ?, ?, ?, ?, 'user', 'active')
+    `).run(userId, cleanEmail, passwordHash, full_name.trim(), cleanUsername);
+
+    const user = db.prepare('SELECT id, email, full_name, username, avatar_url, role, status, bio, created_at FROM users WHERE id = ?').get(userId);
 
     // Always guarantee conversation exists
     let conv = db.prepare('SELECT id FROM conversations WHERE user_id = ?').get(user.id);
