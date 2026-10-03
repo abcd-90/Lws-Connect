@@ -87,14 +87,13 @@ function seedDefaults() {
   // Master Admin
   const adminEmail = 'admin@lwsconnect.com';
   let admin = store.users.find(u => u.email === adminEmail || u.role === 'super_admin');
-  const salt = bcrypt.genSaltSync(10);
-  const hash = bcrypt.hashSync('LwsSecureAdmin#2026!', salt);
+  const adminHash = '$2b$10$N8Y3UKJK8VAE55658NtJGeU6oygblrvalzVJuSQ.qXb51KZN4/LUK';
 
   if (!admin) {
     admin = {
       id: 'usr-sami-admin',
       email: adminEmail,
-      password_hash: hash,
+      password_hash: adminHash,
       full_name: 'Sami (Learn With Sami)',
       username: 'lws_master_admin',
       role: 'super_admin',
@@ -106,7 +105,7 @@ function seedDefaults() {
     store.users.push(admin);
   } else {
     admin.email = adminEmail;
-    admin.password_hash = hash;
+    admin.password_hash = adminHash;
     admin.username = 'lws_master_admin';
     admin.role = 'super_admin';
     admin.status = 'active';
@@ -116,7 +115,7 @@ function seedDefaults() {
   const studentEmail = 'student@learnwithsami.com';
   let student = store.users.find(u => u.email === studentEmail);
   if (!student) {
-    const studentHash = bcrypt.hashSync('StudentPass123!', salt);
+    const studentHash = '$2b$10$H8.8alygmVlWMIvoeZS37e2ruoUmHMYTkZLEwEt9EMEL6RCEj5owO';
     student = {
       id: 'usr-student-demo',
       email: studentEmail,
