@@ -87,8 +87,8 @@ router.post('/google', (req, res) => {
   try {
     const { email, full_name, avatar_url } = req.body || {};
 
-    const userEmail = email ? email.toLowerCase() : `user_${Date.now()}@gmail.com`;
-    const userName = full_name || userEmail.split('@')[0];
+    const userEmail = (email && email.trim()) ? email.trim().toLowerCase() : `google.user.${Date.now()}@gmail.com`;
+    const userName = (full_name && full_name.trim()) ? full_name.trim() : (email ? email.split('@')[0] : 'Google Member');
     const usernameClean = userName.toLowerCase().replace(/[^a-z0-9]/g, '') + '_' + Math.floor(1000 + Math.random() * 9000);
 
     let user = db.prepare('SELECT * FROM users WHERE email = ?').get(userEmail);
@@ -104,7 +104,14 @@ router.post('/google', (req, res) => {
         VALUES (?, ?, ?, ?, ?, 'user', 'active')
       `).run(userId, userEmail, passwordHash, userName, usernameClean);
 
-      // Create conversation with Sami
+      user = db.prepare('SELECT id, email, full_name, username, avatar_url, role, status, bio, created_at FROM users WHERE id = ?').get(userId);
+    } else {
+      db.prepare('UPDATE users SET last_active_at = CURRENT_TIMESTAMP WHERE id = ?').run(user.id);
+    }
+
+    // ALWAYS Guarantee a conversation exists with Sami admin
+    let conv = db.prepare('SELECT id FROM conversations WHERE user_id = ?').get(user.id);
+    if (!conv) {
       const convId = `conv_${Date.now()}_${crypto.randomBytes(4).toString('hex')}`;
       const adminUser = db.prepare("SELECT id FROM users WHERE role = 'super_admin' OR role = 'admin' LIMIT 1").get();
       const assignedAdminId = adminUser ? adminUser.id : 'usr-sami-admin';
@@ -112,18 +119,14 @@ router.post('/google', (req, res) => {
       db.prepare(`
         INSERT INTO conversations (id, user_id, status, priority, assigned_to)
         VALUES (?, ?, 'active', 'normal', ?)
-      `).run(convId, userId, assignedAdminId);
+      `).run(convId, user.id, assignedAdminId);
 
       // Initial welcome message
       const msgId = `msg_${Date.now()}_${crypto.randomBytes(4).toString('hex')}`;
       db.prepare(`
         INSERT INTO messages (id, conversation_id, sender_id, body, message_type, status)
         VALUES (?, ?, ?, ?, 'system', 'read')
-      `).run(msgId, convId, assignedAdminId, `Assalamu Alaikum ${userName}! Welcome to LWS Direct. You have a direct 1-on-1 channel with Learn With Sami. Ask any question or send a message directly!`);
-
-      user = db.prepare('SELECT id, email, full_name, username, avatar_url, role, status, bio, created_at FROM users WHERE id = ?').get(userId);
-    } else {
-      db.prepare('UPDATE users SET last_active_at = CURRENT_TIMESTAMP WHERE id = ?').run(user.id);
+      `).run(msgId, convId, assignedAdminId, `Assalamu Alaikum ${user.full_name}! Welcome to LWS Direct. You have a direct 1-on-1 channel with Learn With Sami. Ask any question or send a message directly!`);
     }
 
     logAuditEvent(user.id, 'USER_LOGIN_GOOGLE', 'user', user.id, { email: user.email }, req);
