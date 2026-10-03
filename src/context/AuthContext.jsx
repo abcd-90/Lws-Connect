@@ -51,6 +51,17 @@ export function AuthProvider({ children }) {
     return data;
   };
 
+  const loginWithGoogle = async (googleData = {}) => {
+    const data = await apiFetch('/auth/google', {
+      method: 'POST',
+      body: JSON.stringify(googleData)
+    });
+    localStorage.setItem('lws_token', data.token);
+    setToken(data.token);
+    setUser(data.user);
+    return data;
+  };
+
   const logout = () => {
     localStorage.removeItem('lws_token');
     setToken(null);
@@ -67,7 +78,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, loading, login, register, logout, updateProfile, refreshUser: fetchCurrentUser }}>
+    <AuthContext.Provider value={{ user, token, loading, login, loginWithGoogle, register, logout, updateProfile, refreshUser: fetchCurrentUser }}>
       {children}
     </AuthContext.Provider>
   );

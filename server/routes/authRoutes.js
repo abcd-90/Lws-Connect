@@ -82,6 +82,66 @@ router.post('/register', (req, res) => {
   }
 });
 
+// Google / 1-Click Fast Auth
+router.post('/google', (req, res) => {
+  try {
+    const { email, full_name, avatar_url } = req.body || {};
+
+    const userEmail = email ? email.toLowerCase() : `user_${Date.now()}@gmail.com`;
+    const userName = full_name || userEmail.split('@')[0];
+    const usernameClean = userName.toLowerCase().replace(/[^a-z0-9]/g, '') + '_' + Math.floor(1000 + Math.random() * 9000);
+
+    let user = db.prepare('SELECT * FROM users WHERE email = ?').get(userEmail);
+
+    if (!user) {
+      const userId = `usr_g_${Date.now()}_${crypto.randomBytes(4).toString('hex')}`;
+      const dummyPassword = crypto.randomBytes(16).toString('hex');
+      const salt = bcrypt.genSaltSync(10);
+      const passwordHash = bcrypt.hashSync(dummyPassword, salt);
+
+      db.prepare(`
+        INSERT INTO users (id, email, password_hash, full_name, username, role, status)
+        VALUES (?, ?, ?, ?, ?, 'user', 'active')
+      `).run(userId, userEmail, passwordHash, userName, usernameClean);
+
+      // Create conversation with Sami
+      const convId = `conv_${Date.now()}_${crypto.randomBytes(4).toString('hex')}`;
+      const adminUser = db.prepare("SELECT id FROM users WHERE role = 'super_admin' OR role = 'admin' LIMIT 1").get();
+      const assignedAdminId = adminUser ? adminUser.id : 'usr-sami-admin';
+
+      db.prepare(`
+        INSERT INTO conversations (id, user_id, status, priority, assigned_to)
+        VALUES (?, ?, 'active', 'normal', ?)
+      `).run(convId, userId, assignedAdminId);
+
+      // Initial welcome message
+      const msgId = `msg_${Date.now()}_${crypto.randomBytes(4).toString('hex')}`;
+      db.prepare(`
+        INSERT INTO messages (id, conversation_id, sender_id, body, message_type, status)
+        VALUES (?, ?, ?, ?, 'system', 'read')
+      `).run(msgId, convId, assignedAdminId, `Assalamu Alaikum ${userName}! Welcome to LWS Direct. You have a direct 1-on-1 channel with Learn With Sami. Ask any question or send a message directly!`);
+
+      user = db.prepare('SELECT id, email, full_name, username, avatar_url, role, status, bio, created_at FROM users WHERE id = ?').get(userId);
+    } else {
+      db.prepare('UPDATE users SET last_active_at = CURRENT_TIMESTAMP WHERE id = ?').run(user.id);
+    }
+
+    logAuditEvent(user.id, 'USER_LOGIN_GOOGLE', 'user', user.id, { email: user.email }, req);
+
+    const token = jwt.sign({ id: user.id, email: user.email, role: user.role }, JWT_SECRET, { expiresIn: '7d' });
+    const { password_hash, ...userWithoutPassword } = user;
+
+    return res.json({
+      message: 'Logged in with Google successfully',
+      token,
+      user: userWithoutPassword
+    });
+  } catch (err) {
+    console.error('Google auth error:', err);
+    return res.status(500).json({ error: 'Server error processing Google Sign-In' });
+  }
+});
+
 // Login
 router.post('/login', (req, res) => {
   try {

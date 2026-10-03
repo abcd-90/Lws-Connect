@@ -12,12 +12,25 @@ router.get('/active-theme', (req, res) => {
     const brand = db.prepare('SELECT * FROM brand_settings WHERE id = 1').get();
     const activeVersion = db.prepare("SELECT * FROM theme_versions WHERE status = 'published' ORDER BY version_num DESC LIMIT 1").get();
 
+    let parsedConfig = null;
+    if (activeVersion && activeVersion.config_json) {
+      if (typeof activeVersion.config_json === 'string') {
+        try {
+          parsedConfig = JSON.parse(activeVersion.config_json);
+        } catch (e) {
+          parsedConfig = null;
+        }
+      } else {
+        parsedConfig = activeVersion.config_json;
+      }
+    }
+
     return res.json({
       brand: brand || {},
       active_version: activeVersion ? {
         id: activeVersion.id,
         version_num: activeVersion.version_num,
-        config: JSON.parse(activeVersion.config_json)
+        config: parsedConfig
       } : null
     });
   } catch (err) {
