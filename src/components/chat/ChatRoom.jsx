@@ -4,7 +4,7 @@ import { MessageComposer } from './MessageComposer';
 import { apiFetch } from '../../utils/api';
 import { useSocket } from '../../context/SocketContext';
 import { useAuth } from '../../context/AuthContext';
-import { ShieldCheck, ArrowLeft, MoreVertical, Flag, AlertTriangle, CheckCircle, RefreshCw } from 'lucide-react';
+import { ShieldCheck, ArrowLeft, Flag, AlertTriangle, CheckCircle, RefreshCw } from 'lucide-react';
 
 export function ChatRoom({ conversationId, onBack, currentRole }) {
   const { user } = useAuth();
@@ -117,33 +117,35 @@ export function ChatRoom({ conversationId, onBack, currentRole }) {
   };
 
   const isTyping = typingUsers[conversationId] && Object.keys(typingUsers[conversationId]).length > 0;
-  const recipientTitle = currentRole === 'user' ? 'Sami (Learn With Sami)' : (conversation ? `User ID: ${conversation.user_id}` : 'User');
+  const recipientTitle = currentRole === 'user' ? 'Sami (Learn With Sami)' : (conversation ? `User: ${conversation.user_full_name || conversation.user_username}` : 'User');
 
   return (
-    <div className="w-full h-full flex flex-col bg-[#090D16] relative overflow-hidden">
+    <div className="w-full h-full flex flex-col bg-[#0B0809] relative overflow-hidden">
       {/* Header */}
-      <div className="h-16 bg-[#0F172A] border-b border-white/10 px-4 flex items-center justify-between z-10 shrink-0">
+      <div className="h-16 bg-[#140D0F] border-b border-red-500/20 px-4 flex items-center justify-between z-10 shrink-0">
         <div className="flex items-center gap-3">
           {onBack && (
-            <button onClick={onBack} className="p-2 hover:bg-slate-800 rounded-lg text-slate-300 md:hidden">
+            <button onClick={onBack} className="p-2 hover:bg-white/5 rounded-lg text-slate-300 md:hidden cursor-pointer">
               <ArrowLeft className="w-5 h-5" />
             </button>
           )}
 
           <div className="relative">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-sky-600 to-emerald-600 flex items-center justify-center font-bold text-white shadow-md">
-              {currentRole === 'user' ? 'S' : 'U'}
-            </div>
-            <span className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-[#0F172A] rounded-full" />
+            <img
+              src="/logo.png"
+              alt="Sami Avatar"
+              className="w-10 h-10 rounded-full object-cover border border-red-500 shadow-md"
+            />
+            <span className="absolute bottom-0 right-0 w-3 h-3 bg-red-500 border-2 border-[#140D0F] rounded-full" />
           </div>
 
           <div>
             <h3 className="font-bold text-sm text-white flex items-center gap-2">
               {recipientTitle}
-              <ShieldCheck className="w-4 h-4 text-[#0284C7]" title="Verified Channel" />
+              <ShieldCheck className="w-4 h-4 text-red-500" title="Verified Channel" />
             </h3>
-            <p className="text-[11px] text-emerald-400 flex items-center gap-1 font-medium">
-              <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" />
+            <p className="text-[11px] text-red-400 flex items-center gap-1 font-semibold">
+              <span className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />
               Online • Private Direct Line
             </p>
           </div>
@@ -153,7 +155,7 @@ export function ChatRoom({ conversationId, onBack, currentRole }) {
         <div className="flex items-center gap-2">
           <button
             onClick={() => setReportModalOpen(true)}
-            className="px-3 py-1.5 text-xs text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg border border-transparent hover:border-rose-500/20 transition flex items-center gap-1.5"
+            className="px-3 py-1.5 text-xs text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg border border-transparent hover:border-red-500/20 transition flex items-center gap-1.5 cursor-pointer"
             title="Report conversation issue"
           >
             <Flag className="w-3.5 h-3.5" />
@@ -163,7 +165,7 @@ export function ChatRoom({ conversationId, onBack, currentRole }) {
           <button
             onClick={fetchMessages}
             title="Refresh messages"
-            className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition"
+            className="p-2 text-slate-400 hover:text-white hover:bg-white/5 rounded-lg transition cursor-pointer"
           >
             <RefreshCw className="w-4 h-4" />
           </button>
@@ -173,19 +175,19 @@ export function ChatRoom({ conversationId, onBack, currentRole }) {
       {/* Message History Body */}
       <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-3 custom-scrollbar">
         {loading ? (
-          <div className="h-full flex items-center justify-center text-slate-500 text-sm gap-2">
-            <RefreshCw className="w-5 h-5 animate-spin text-[#0284C7]" />
+          <div className="h-full flex items-center justify-center text-slate-400 text-sm gap-2">
+            <RefreshCw className="w-5 h-5 animate-spin text-red-500" />
             Loading secure conversation...
           </div>
         ) : error ? (
-          <div className="h-full flex items-center justify-center text-rose-400 text-sm">
+          <div className="h-full flex items-center justify-center text-red-400 text-sm">
             <AlertTriangle className="w-5 h-5 mr-2" /> {error}
           </div>
         ) : messages.length === 0 ? (
-          <div className="h-full flex flex-col items-center justify-center text-center p-6 text-slate-500">
-            <ShieldCheck className="w-12 h-12 text-[#0284C7] mb-3 opacity-80" />
-            <h4 className="text-base font-bold text-slate-200">Your direct conversation starts here</h4>
-            <p className="text-xs max-w-sm mt-1 text-slate-400">
+          <div className="h-full flex flex-col items-center justify-center text-center p-6 text-slate-400">
+            <ShieldCheck className="w-12 h-12 text-red-500 mb-3 opacity-90" />
+            <h4 className="text-base font-bold text-white">Your direct conversation starts here</h4>
+            <p className="text-xs max-w-sm mt-1 text-slate-300">
               Messages are transmitted directly inside this platform. Your phone number is never exposed.
             </p>
           </div>
@@ -201,8 +203,8 @@ export function ChatRoom({ conversationId, onBack, currentRole }) {
 
         {/* Typing indicator */}
         {isTyping && (
-          <div className="flex items-center gap-2 text-xs text-sky-400 italic bg-sky-950/30 px-3 py-1.5 rounded-full w-fit border border-sky-500/20 animate-fade-in">
-            <span className="w-2 h-2 bg-sky-400 rounded-full animate-pulse" />
+          <div className="flex items-center gap-2 text-xs text-red-400 italic bg-red-950/40 px-3 py-1.5 rounded-full w-fit border border-red-500/30 animate-fade-in">
+            <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
             Someone is typing a response...
           </div>
         )}
@@ -219,10 +221,10 @@ export function ChatRoom({ conversationId, onBack, currentRole }) {
 
       {/* Report Modal */}
       {reportModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-[#0F172A] border border-white/10 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl animate-fade-in">
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-[#140D0F] border border-red-500/30 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl animate-fade-in">
             <h3 className="text-lg font-bold text-white flex items-center gap-2">
-              <Flag className="w-5 h-5 text-rose-400" /> Report Issue or Feedback
+              <Flag className="w-5 h-5 text-red-400" /> Report Issue or Feedback
             </h3>
 
             {reportSuccess ? (
@@ -237,7 +239,7 @@ export function ChatRoom({ conversationId, onBack, currentRole }) {
                   <select
                     value={reportCategory}
                     onChange={(e) => setReportCategory(e.target.value)}
-                    className="w-full bg-[#111827] border border-white/10 rounded-xl px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-[#0284C7]"
+                    className="w-full bg-[#0B0809] border border-red-500/20 rounded-xl px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-red-500"
                   >
                     <option value="spam">Spam / Unsolicited</option>
                     <option value="harassment">Abuse or Harassment</option>
@@ -253,7 +255,7 @@ export function ChatRoom({ conversationId, onBack, currentRole }) {
                     onChange={(e) => setReportDetails(e.target.value)}
                     rows={3}
                     placeholder="Provide additional context for moderation team..."
-                    className="w-full bg-[#111827] border border-white/10 rounded-xl px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-[#0284C7] resize-none"
+                    className="w-full bg-[#0B0809] border border-red-500/20 rounded-xl px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-red-500 resize-none"
                   />
                 </div>
 
@@ -261,13 +263,13 @@ export function ChatRoom({ conversationId, onBack, currentRole }) {
                   <button
                     type="button"
                     onClick={() => setReportModalOpen(false)}
-                    className="px-4 py-2 text-xs font-medium text-slate-400 hover:text-white"
+                    className="px-4 py-2 text-xs font-medium text-slate-400 hover:text-white cursor-pointer"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="px-4 py-2 text-xs font-semibold bg-rose-600 hover:bg-rose-500 text-white rounded-xl shadow-md"
+                    className="px-4 py-2 text-xs font-bold bg-red-600 hover:bg-red-500 text-white rounded-xl shadow-md cursor-pointer"
                   >
                     Submit Report
                   </button>

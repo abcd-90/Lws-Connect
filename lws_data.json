@@ -1,0 +1,690 @@
+{
+  "users": [
+    {
+      "id": "usr-sami-admin",
+      "email": "admin@lwsconnect.com",
+      "password_hash": "$2b$10$N8Y3UKJK8VAE55658NtJGeU6oygblrvalzVJuSQ.qXb51KZN4/LUK",
+      "full_name": "Sami (Learn With Sami)",
+      "username": "lws_master_admin",
+      "role": "super_admin",
+      "status": "active",
+      "bio": "Official Learn With Sami creator account.",
+      "created_at": "2026-10-03T14:15:20.871Z",
+      "last_active_at": "2026-10-03T14:49:10.159Z"
+    },
+    {
+      "id": "usr-student-demo",
+      "email": "student@learnwithsami.com",
+      "password_hash": "$2b$10$2PC.z5CSnefoM/Q84Y6GrOFVrVXymNTdcuTsYSpvVik4jifxOJ0Cy",
+      "full_name": "Tariq Ahmad",
+      "username": "tariq_lws",
+      "role": "user",
+      "status": "active",
+      "bio": "Community member & tech enthusiast.",
+      "created_at": "2026-10-03T14:15:20.985Z",
+      "last_active_at": "2026-10-03T14:15:20.985Z"
+    },
+    {
+      "id": "usr_1791036923512_75961c92",
+      "email": "testuser_1791036923505@example.com",
+      "password_hash": "$2b$10$ZA3xs8jRr5Nhq3p/OHHUZ.2o3FDaw9d82icDA5JHH7HWsunHt1bFe",
+      "full_name": "Test Community Member",
+      "username": "testuser_1791036923505",
+      "avatar_url": null,
+      "role": "user",
+      "status": "active",
+      "bio": null,
+      "created_at": "2026-10-03T14:15:23.661Z",
+      "last_active_at": "2026-10-03T14:15:23.661Z"
+    },
+    {
+      "id": "usr_1791037206721_1314a895",
+      "email": "testuser_1791037206714@example.com",
+      "password_hash": "$2b$10$CxikOv4.9iIpcYPt5CBCxeuJNhfuHpW3GSl.tNpVgHRaBIk0cfqOC",
+      "full_name": "Test Community Member",
+      "username": "testuser_1791037206714",
+      "avatar_url": null,
+      "role": "user",
+      "status": "active",
+      "bio": null,
+      "created_at": "2026-10-03T14:20:06.838Z",
+      "last_active_at": "2026-10-03T14:20:06.838Z"
+    },
+    {
+      "id": "usr_1791037989685_6db36a7d",
+      "email": "testuser_1791037989677@example.com",
+      "password_hash": "$2b$10$k.zTJM0zFlgVFrzqaGFSju7Gkl6T3jUih.ACCQCT7RIh56wxNkjX2",
+      "full_name": "Test Community Member",
+      "username": "testuser_1791037989677",
+      "avatar_url": null,
+      "role": "user",
+      "status": "active",
+      "bio": null,
+      "created_at": "2026-10-03T14:33:09.812Z",
+      "last_active_at": "2026-10-03T14:33:09.812Z"
+    },
+    {
+      "id": "usr_1791038144770_8e2e3185",
+      "email": "testuser_1791038144761@example.com",
+      "password_hash": "$2b$10$FZxog98zD2QM1TFoX99yteH8DCaMN3lER69qsKRVbSKrrCr1GTLsG",
+      "full_name": "Test Community Member",
+      "username": "testuser_1791038144761",
+      "avatar_url": null,
+      "role": "user",
+      "status": "active",
+      "bio": null,
+      "created_at": "2026-10-03T14:35:44.951Z",
+      "last_active_at": "2026-10-03T14:35:44.951Z"
+    },
+    {
+      "id": "usr_1791038950181_c72bd161",
+      "email": "testuser_1791038950172@example.com",
+      "password_hash": "$2b$10$O3lbRkv2J8tx7MSl.aoeZO7SiS0QrrOWJ/h8gHMlDFHjRQ53g/Ksy",
+      "full_name": "Test Community Member",
+      "username": "testuser_1791038950172",
+      "avatar_url": null,
+      "role": "user",
+      "status": "active",
+      "bio": null,
+      "created_at": "2026-10-03T14:49:10.286Z",
+      "last_active_at": "2026-10-03T14:49:10.286Z"
+    }
+  ],
+  "conversations": [
+    {
+      "id": "conv-demo-1",
+      "user_id": "usr-student-demo",
+      "status": "active",
+      "priority": "normal",
+      "assigned_to": "usr-sami-admin",
+      "created_at": "2026-10-03T14:15:20.985Z",
+      "updated_at": "2026-10-03T14:15:20.985Z"
+    },
+    {
+      "id": "conv_1791036923662_f09cc8dc",
+      "user_id": "usr_1791036923512_75961c92",
+      "status": "usr-sami-admin",
+      "priority": "normal",
+      "assigned_to": "usr-sami-admin",
+      "created_at": "2026-10-03T14:15:23.663Z",
+      "updated_at": "2026-10-03T14:15:23.717Z"
+    },
+    {
+      "id": "conv_1791037206840_3cf12ef2",
+      "user_id": "usr_1791037206721_1314a895",
+      "status": "usr-sami-admin",
+      "priority": "normal",
+      "assigned_to": "usr-sami-admin",
+      "created_at": "2026-10-03T14:20:06.840Z",
+      "updated_at": "2026-10-03T14:20:06.883Z"
+    },
+    {
+      "id": "conv_1791037989813_8153ca28",
+      "user_id": "usr_1791037989685_6db36a7d",
+      "status": "usr-sami-admin",
+      "priority": "normal",
+      "assigned_to": "usr-sami-admin",
+      "created_at": "2026-10-03T14:33:09.813Z",
+      "updated_at": "2026-10-03T14:33:09.863Z"
+    },
+    {
+      "id": "conv_1791038144953_e0d0dd84",
+      "user_id": "usr_1791038144770_8e2e3185",
+      "status": "usr-sami-admin",
+      "priority": "normal",
+      "assigned_to": "usr-sami-admin",
+      "created_at": "2026-10-03T14:35:44.953Z",
+      "updated_at": "2026-10-03T14:35:45.003Z"
+    },
+    {
+      "id": "conv_1791038950287_022421cf",
+      "user_id": "usr_1791038950181_c72bd161",
+      "status": "usr-sami-admin",
+      "priority": "normal",
+      "assigned_to": "usr-sami-admin",
+      "created_at": "2026-10-03T14:49:10.287Z",
+      "updated_at": "2026-10-03T14:49:10.333Z"
+    }
+  ],
+  "messages": [
+    {
+      "id": "msg-1",
+      "conversation_id": "conv-demo-1",
+      "sender_id": "usr-student-demo",
+      "body": "Assalamu Alaikum Sami! Testing real-time community messaging.",
+      "message_type": "text",
+      "status": "read",
+      "created_at": "2026-10-03T12:15:20.985Z"
+    },
+    {
+      "id": "msg-2",
+      "conversation_id": "conv-demo-1",
+      "sender_id": "usr-sami-admin",
+      "body": "Wa Alaikum Assalam Tariq! Thank you for reaching out. I would be happy to help!",
+      "message_type": "text",
+      "status": "read",
+      "created_at": "2026-10-03T13:15:20.985Z"
+    },
+    {
+      "id": "msg_1791036923664_bbce85bc",
+      "conversation_id": "conv_1791036923662_f09cc8dc",
+      "sender_id": "usr-sami-admin",
+      "body": "Welcome to LWS Direct, Test Community Member! You have a direct line to Learn With Sami. Feel free to ask any question or leave feedback.",
+      "message_type": "text",
+      "status": "sent",
+      "created_at": "2026-10-03T14:15:23.664Z"
+    },
+    {
+      "id": "msg_1791036923697_11880324",
+      "conversation_id": "conv_1791036923662_f09cc8dc",
+      "sender_id": "usr_1791036923512_75961c92",
+      "body": "Hello Sami! Testing message functionality.",
+      "message_type": "text",
+      "status": "sent",
+      "created_at": "2026-10-03T14:15:23.698Z"
+    },
+    {
+      "id": "msg_1791036923717_6f8f8d6c",
+      "conversation_id": "conv_1791036923662_f09cc8dc",
+      "sender_id": "usr-sami-admin",
+      "body": "Wa Alaikum Assalam! Admin response verified.",
+      "message_type": "text",
+      "status": "sent",
+      "created_at": "2026-10-03T14:15:23.717Z"
+    },
+    {
+      "id": "msg_1791037206841_fe888ff2",
+      "conversation_id": "conv_1791037206840_3cf12ef2",
+      "sender_id": "usr-sami-admin",
+      "body": "Welcome to LWS Direct, Test Community Member! You have a direct line to Learn With Sami. Feel free to ask any question or leave feedback.",
+      "message_type": "text",
+      "status": "sent",
+      "created_at": "2026-10-03T14:20:06.841Z"
+    },
+    {
+      "id": "msg_1791037206868_a95a9fd6",
+      "conversation_id": "conv_1791037206840_3cf12ef2",
+      "sender_id": "usr_1791037206721_1314a895",
+      "body": "Hello Sami! Testing message functionality.",
+      "message_type": "text",
+      "status": "sent",
+      "created_at": "2026-10-03T14:20:06.868Z"
+    },
+    {
+      "id": "msg_1791037206883_d5ce6852",
+      "conversation_id": "conv_1791037206840_3cf12ef2",
+      "sender_id": "usr-sami-admin",
+      "body": "Wa Alaikum Assalam! Admin response verified.",
+      "message_type": "text",
+      "status": "sent",
+      "created_at": "2026-10-03T14:20:06.883Z"
+    },
+    {
+      "id": "msg_1791037989815_ab185440",
+      "conversation_id": "conv_1791037989813_8153ca28",
+      "sender_id": "usr-sami-admin",
+      "body": "Welcome to LWS Direct, Test Community Member! You have a direct line to Learn With Sami. Feel free to ask any question or leave feedback.",
+      "message_type": "text",
+      "status": "sent",
+      "created_at": "2026-10-03T14:33:09.815Z"
+    },
+    {
+      "id": "msg_1791037989847_d1b1dd59",
+      "conversation_id": "conv_1791037989813_8153ca28",
+      "sender_id": "usr_1791037989685_6db36a7d",
+      "body": "Hello Sami! Testing message functionality.",
+      "message_type": "text",
+      "status": "sent",
+      "created_at": "2026-10-03T14:33:09.847Z"
+    },
+    {
+      "id": "msg_1791037989863_ff146813",
+      "conversation_id": "conv_1791037989813_8153ca28",
+      "sender_id": "usr-sami-admin",
+      "body": "Wa Alaikum Assalam! Admin response verified.",
+      "message_type": "text",
+      "status": "sent",
+      "created_at": "2026-10-03T14:33:09.863Z"
+    },
+    {
+      "id": "msg_1791038144955_f25d2390",
+      "conversation_id": "conv_1791038144953_e0d0dd84",
+      "sender_id": "usr-sami-admin",
+      "body": "Welcome to LWS Direct, Test Community Member! You have a direct line to Learn With Sami. Feel free to ask any question or leave feedback.",
+      "message_type": "text",
+      "status": "sent",
+      "created_at": "2026-10-03T14:35:44.955Z"
+    },
+    {
+      "id": "msg_1791038144986_8c944c91",
+      "conversation_id": "conv_1791038144953_e0d0dd84",
+      "sender_id": "usr_1791038144770_8e2e3185",
+      "body": "Hello Sami! Testing message functionality.",
+      "message_type": "text",
+      "status": "sent",
+      "created_at": "2026-10-03T14:35:44.987Z"
+    },
+    {
+      "id": "msg_1791038145002_bbaeae0d",
+      "conversation_id": "conv_1791038144953_e0d0dd84",
+      "sender_id": "usr-sami-admin",
+      "body": "Wa Alaikum Assalam! Admin response verified.",
+      "message_type": "text",
+      "status": "sent",
+      "created_at": "2026-10-03T14:35:45.002Z"
+    },
+    {
+      "id": "msg_1791038950289_afcf9b1c",
+      "conversation_id": "conv_1791038950287_022421cf",
+      "sender_id": "usr-sami-admin",
+      "body": "Welcome to LWS Direct, Test Community Member! You have a direct line to Learn With Sami. Feel free to ask any question or leave feedback.",
+      "message_type": "text",
+      "status": "sent",
+      "created_at": "2026-10-03T14:49:10.289Z"
+    },
+    {
+      "id": "msg_1791038950317_96143bd4",
+      "conversation_id": "conv_1791038950287_022421cf",
+      "sender_id": "usr_1791038950181_c72bd161",
+      "body": "Hello Sami! Testing message functionality.",
+      "message_type": "text",
+      "status": "sent",
+      "created_at": "2026-10-03T14:49:10.317Z"
+    },
+    {
+      "id": "msg_1791038950333_d78f8443",
+      "conversation_id": "conv_1791038950287_022421cf",
+      "sender_id": "usr-sami-admin",
+      "body": "Wa Alaikum Assalam! Admin response verified.",
+      "message_type": "text",
+      "status": "sent",
+      "created_at": "2026-10-03T14:49:10.333Z"
+    }
+  ],
+  "message_attachments": [],
+  "notifications": [
+    {
+      "id": "notif_1791036923666_a532376a",
+      "user_id": "usr_1791036923512_75961c92",
+      "type": "system",
+      "is_read": 0,
+      "created_at": "2026-10-03T14:15:23.666Z"
+    },
+    {
+      "id": "notif_1791036923700_9c7404ca",
+      "user_id": "usr-sami-admin",
+      "title": "New message from Test Community Member",
+      "body": "Hello Sami! Testing message functionality.",
+      "type": "/admin/conversations",
+      "is_read": 0,
+      "created_at": "2026-10-03T14:15:23.700Z"
+    },
+    {
+      "id": "notif_1791036923720_154057f2",
+      "user_id": "usr_1791036923512_75961c92",
+      "title": "Reply from Sami",
+      "body": "Wa Alaikum Assalam! Admin response verified.",
+      "type": "/app/messages",
+      "is_read": 0,
+      "created_at": "2026-10-03T14:15:23.720Z"
+    },
+    {
+      "id": "notif_1791037206843_2f0c83a5",
+      "user_id": "usr_1791037206721_1314a895",
+      "type": "system",
+      "is_read": 0,
+      "created_at": "2026-10-03T14:20:06.843Z"
+    },
+    {
+      "id": "notif_1791037206871_e2d130b4",
+      "user_id": "usr-sami-admin",
+      "title": "New message from Test Community Member",
+      "body": "Hello Sami! Testing message functionality.",
+      "type": "/admin/conversations",
+      "is_read": 0,
+      "created_at": "2026-10-03T14:20:06.872Z"
+    },
+    {
+      "id": "notif_1791037206886_0ce67afa",
+      "user_id": "usr_1791037206721_1314a895",
+      "title": "Reply from Sami",
+      "body": "Wa Alaikum Assalam! Admin response verified.",
+      "type": "/app/messages",
+      "is_read": 0,
+      "created_at": "2026-10-03T14:20:06.886Z"
+    },
+    {
+      "id": "notif_1791037989816_c958452e",
+      "user_id": "usr_1791037989685_6db36a7d",
+      "type": "system",
+      "is_read": 0,
+      "created_at": "2026-10-03T14:33:09.817Z"
+    },
+    {
+      "id": "notif_1791037989851_a079bfa5",
+      "user_id": "usr-sami-admin",
+      "title": "New message from Test Community Member",
+      "body": "Hello Sami! Testing message functionality.",
+      "type": "/admin/conversations",
+      "is_read": 0,
+      "created_at": "2026-10-03T14:33:09.851Z"
+    },
+    {
+      "id": "notif_1791037989867_5ea40376",
+      "user_id": "usr_1791037989685_6db36a7d",
+      "title": "Reply from Sami",
+      "body": "Wa Alaikum Assalam! Admin response verified.",
+      "type": "/app/messages",
+      "is_read": 0,
+      "created_at": "2026-10-03T14:33:09.867Z"
+    },
+    {
+      "id": "notif_1791038144957_52993bfa",
+      "user_id": "usr_1791038144770_8e2e3185",
+      "type": "system",
+      "is_read": 0,
+      "created_at": "2026-10-03T14:35:44.957Z"
+    },
+    {
+      "id": "notif_1791038144991_f74c3b6f",
+      "user_id": "usr-sami-admin",
+      "title": "New message from Test Community Member",
+      "body": "Hello Sami! Testing message functionality.",
+      "type": "/admin/conversations",
+      "is_read": 0,
+      "created_at": "2026-10-03T14:35:44.991Z"
+    },
+    {
+      "id": "notif_1791038145021_97b43fe6",
+      "user_id": "usr_1791038144770_8e2e3185",
+      "title": "Reply from Sami",
+      "body": "Wa Alaikum Assalam! Admin response verified.",
+      "type": "/app/messages",
+      "is_read": 0,
+      "created_at": "2026-10-03T14:35:45.021Z"
+    },
+    {
+      "id": "notif_1791038950291_b34a6fea",
+      "user_id": "usr_1791038950181_c72bd161",
+      "type": "system",
+      "is_read": 0,
+      "created_at": "2026-10-03T14:49:10.291Z"
+    },
+    {
+      "id": "notif_1791038950321_79b82300",
+      "user_id": "usr-sami-admin",
+      "title": "New message from Test Community Member",
+      "body": "Hello Sami! Testing message functionality.",
+      "type": "/admin/conversations",
+      "is_read": 0,
+      "created_at": "2026-10-03T14:49:10.321Z"
+    },
+    {
+      "id": "notif_1791038950337_e89a0236",
+      "user_id": "usr_1791038950181_c72bd161",
+      "title": "Reply from Sami",
+      "body": "Wa Alaikum Assalam! Admin response verified.",
+      "type": "/app/messages",
+      "is_read": 0,
+      "created_at": "2026-10-03T14:49:10.337Z"
+    }
+  ],
+  "blocked_users": [],
+  "reports": [],
+  "audit_logs": [
+    {
+      "id": "audit_1791036923492_74bdb183",
+      "actor_id": "usr-sami-admin",
+      "action": "USER_LOGIN",
+      "target_type": "user",
+      "target_id": "usr-sami-admin",
+      "metadata": "{\"role\":\"super_admin\"}",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-10-03T14:15:23.492Z"
+    },
+    {
+      "id": "audit_1791036923668_1e9b5054",
+      "actor_id": "usr_1791036923512_75961c92",
+      "action": "USER_REGISTERED",
+      "target_type": "user",
+      "target_id": "usr_1791036923512_75961c92",
+      "metadata": "{\"email\":\"testuser_1791036923505@example.com\",\"username\":\"testuser_1791036923505\"}",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-10-03T14:15:23.668Z"
+    },
+    {
+      "id": "audit_1791036923739_adea1ea1",
+      "actor_id": "usr-sami-admin",
+      "action": "THEME_PUBLISHED",
+      "target_type": "theme",
+      "target_id": "theme_v1_1791036923736",
+      "metadata": "{\"version\":1}",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-10-03T14:15:23.739Z"
+    },
+    {
+      "id": "audit_1791037206705_31188d95",
+      "actor_id": "usr-sami-admin",
+      "action": "USER_LOGIN",
+      "target_type": "user",
+      "target_id": "usr-sami-admin",
+      "metadata": "{\"role\":\"super_admin\"}",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-10-03T14:20:06.705Z"
+    },
+    {
+      "id": "audit_1791037206844_7b95f77f",
+      "actor_id": "usr_1791037206721_1314a895",
+      "action": "USER_REGISTERED",
+      "target_type": "user",
+      "target_id": "usr_1791037206721_1314a895",
+      "metadata": "{\"email\":\"testuser_1791037206714@example.com\",\"username\":\"testuser_1791037206714\"}",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-10-03T14:20:06.844Z"
+    },
+    {
+      "id": "audit_1791037206904_dec1538c",
+      "actor_id": "usr-sami-admin",
+      "action": "THEME_PUBLISHED",
+      "target_type": "theme",
+      "target_id": "theme_v1_1791037206900",
+      "metadata": "{\"version\":1}",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-10-03T14:20:06.904Z"
+    },
+    {
+      "id": "audit_1791037989661_bd88f004",
+      "actor_id": "usr-sami-admin",
+      "action": "USER_LOGIN",
+      "target_type": "user",
+      "target_id": "usr-sami-admin",
+      "metadata": "{\"role\":\"super_admin\"}",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-10-03T14:33:09.661Z"
+    },
+    {
+      "id": "audit_1791037989818_dcba4e0a",
+      "actor_id": "usr_1791037989685_6db36a7d",
+      "action": "USER_REGISTERED",
+      "target_type": "user",
+      "target_id": "usr_1791037989685_6db36a7d",
+      "metadata": "{\"email\":\"testuser_1791037989677@example.com\",\"username\":\"testuser_1791037989677\"}",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-10-03T14:33:09.818Z"
+    },
+    {
+      "id": "audit_1791037989904_34a9d395",
+      "actor_id": "usr-sami-admin",
+      "action": "THEME_PUBLISHED",
+      "target_type": "theme",
+      "target_id": "theme_v1_1791037989900",
+      "metadata": "{\"version\":1}",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-10-03T14:33:09.904Z"
+    },
+    {
+      "id": "audit_1791038144746_28dddd30",
+      "actor_id": "usr-sami-admin",
+      "action": "USER_LOGIN",
+      "target_type": "user",
+      "target_id": "usr-sami-admin",
+      "metadata": "{\"role\":\"super_admin\"}",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-10-03T14:35:44.747Z"
+    },
+    {
+      "id": "audit_1791038144958_df8135b0",
+      "actor_id": "usr_1791038144770_8e2e3185",
+      "action": "USER_REGISTERED",
+      "target_type": "user",
+      "target_id": "usr_1791038144770_8e2e3185",
+      "metadata": "{\"email\":\"testuser_1791038144761@example.com\",\"username\":\"testuser_1791038144761\"}",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-10-03T14:35:44.959Z"
+    },
+    {
+      "id": "audit_1791038145042_a2ecb4fe",
+      "actor_id": "usr-sami-admin",
+      "action": "THEME_PUBLISHED",
+      "target_type": "theme",
+      "target_id": "theme_v1_1791038145038",
+      "metadata": "{\"version\":1}",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-10-03T14:35:45.042Z"
+    },
+    {
+      "id": "audit_1791038950161_77c9248b",
+      "actor_id": "usr-sami-admin",
+      "action": "USER_LOGIN",
+      "target_type": "user",
+      "target_id": "usr-sami-admin",
+      "metadata": "{\"role\":\"super_admin\"}",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-10-03T14:49:10.161Z"
+    },
+    {
+      "id": "audit_1791038950293_081fb793",
+      "actor_id": "usr_1791038950181_c72bd161",
+      "action": "USER_REGISTERED",
+      "target_type": "user",
+      "target_id": "usr_1791038950181_c72bd161",
+      "metadata": "{\"email\":\"testuser_1791038950172@example.com\",\"username\":\"testuser_1791038950172\"}",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-10-03T14:49:10.293Z"
+    },
+    {
+      "id": "audit_1791038950357_16b64026",
+      "actor_id": "usr-sami-admin",
+      "action": "THEME_PUBLISHED",
+      "target_type": "theme",
+      "target_id": "theme_v1_1791038950353",
+      "metadata": "{\"version\":1}",
+      "ip_address": "127.0.0.1",
+      "created_at": "2026-10-03T14:49:10.357Z"
+    }
+  ],
+  "brand_settings": [
+    {
+      "id": 1,
+      "is_published": 1,
+      "brand_name": "LWS Direct",
+      "tagline": "The direct line to Learn With Sami",
+      "logo_svg": null,
+      "primary_color": "#0F172A",
+      "secondary_color": "#D97706",
+      "accent_color": "#10B981",
+      "bg_color": "#0B0E14",
+      "surface_color": "#141923",
+      "text_color": "#F8FAFB",
+      "font_family": "Plus Jakarta Sans, sans-serif",
+      "button_radius": "10px",
+      "card_radius": "16px",
+      "hero_headline": "Your direct line to Learn With Sami.",
+      "hero_subheadline": "Skip cluttered social DMs and public forums. LWS Direct provides a secure 1-on-1 workspace to ask questions, review code, and connect directly with Sami — without publicly exposing personal numbers.",
+      "hero_cta_text": "Start a Conversation",
+      "footer_text": "© 2026 Learn With Sami. All rights reserved.",
+      "updated_at": "2026-10-03T14:49:10.355Z"
+    }
+  ],
+  "theme_versions": [
+    {
+      "id": "theme_v1_1791036923736",
+      "version_num": 1,
+      "status": "archived",
+      "config_json": "usr-sami-admin",
+      "created_at": "2026-10-03T14:15:23.736Z"
+    },
+    {
+      "id": "theme_v1_1791037206900",
+      "version_num": 1,
+      "status": "archived",
+      "config_json": "usr-sami-admin",
+      "created_at": "2026-10-03T14:20:06.900Z"
+    },
+    {
+      "id": "theme_v1_1791037989900",
+      "version_num": 1,
+      "status": "archived",
+      "config_json": "usr-sami-admin",
+      "created_at": "2026-10-03T14:33:09.900Z"
+    },
+    {
+      "id": "theme_v1_1791038145038",
+      "version_num": 1,
+      "status": "archived",
+      "config_json": "usr-sami-admin",
+      "created_at": "2026-10-03T14:35:45.038Z"
+    },
+    {
+      "id": "theme_v1_1791038950353",
+      "version_num": 1,
+      "status": "{\"brand_name\":\"LWS Direct Custom\",\"tagline\":\"Direct Creator Channel\",\"primary_color\":\"#1E293B\",\"secondary_color\":\"#0284C7\",\"accent_color\":\"#10B981\",\"bg_color\":\"#0B0F19\",\"surface_color\":\"#161F32\",\"text_color\":\"#F8FAFC\",\"font_family\":\"Plus Jakarta Sans, sans-serif\",\"button_radius\":\"10px\",\"card_radius\":\"16px\",\"hero_headline\":\"Connect Directly with Learn With Sami\",\"hero_subheadline\":\"Private 1-on-1 creator platform.\",\"hero_cta_text\":\"Start Messaging Now\",\"footer_text\":\"© 2026 Learn With Sami.\"}",
+      "config_json": "usr-sami-admin",
+      "created_at": "2026-10-03T14:49:10.353Z"
+    }
+  ],
+  "faq_items": [
+    {
+      "id": "faq-1",
+      "question": "Why does LWS Direct exist?",
+      "answer": "LWS Direct was built to give the Learn With Sami community a direct, private communication channel with Sami without publicly sharing personal numbers.",
+      "category": "Platform",
+      "sort_order": 1,
+      "is_published": 1
+    },
+    {
+      "id": "faq-2",
+      "question": "Is my message kept private?",
+      "answer": "Yes! All conversations are 1-on-1 between you and Sami inside this secure environment.",
+      "category": "Privacy",
+      "sort_order": 2,
+      "is_published": 1
+    },
+    {
+      "id": "faq-3",
+      "question": "How quickly can I expect a response?",
+      "answer": "Sami reviews incoming community messages regularly. High-priority questions regarding courses or project feedback are answered promptly.",
+      "category": "Messaging",
+      "sort_order": 3,
+      "is_published": 1
+    },
+    {
+      "id": "faq-4",
+      "question": "Can I send attachments or images?",
+      "answer": "Yes, you can upload project screenshots, design drafts, or code snippets directly inside the message composer.",
+      "category": "Features",
+      "sort_order": 4,
+      "is_published": 1
+    }
+  ],
+  "announcements": [
+    {
+      "id": "ann-1",
+      "title": "Welcome to LWS Direct!",
+      "content": "You can now message Sami directly inside your personal workspace.",
+      "type": "info",
+      "is_active": 1,
+      "created_at": "2026-10-03T14:15:20.634Z"
+    }
+  ]
+}

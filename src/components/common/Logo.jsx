@@ -5,10 +5,10 @@ export function Logo({ size = 'md', showText = true, className = '' }) {
   const { theme } = useTheme();
 
   const iconSizes = {
-    sm: 'w-7 h-7',
-    md: 'w-8 h-8',
-    lg: 'w-10 h-10',
-    xl: 'w-12 h-12'
+    sm: 'w-8 h-8',
+    md: 'w-9 h-9',
+    lg: 'w-11 h-11',
+    xl: 'w-14 h-14'
   };
 
   const textSizes = {
@@ -20,15 +20,17 @@ export function Logo({ size = 'md', showText = true, className = '' }) {
 
   return (
     <div className={`inline-flex items-center gap-2.5 select-none ${className}`}>
-      {/* Sleek Emblem */}
-      <div className={`relative flex items-center justify-center ${iconSizes[size]} rounded-lg bg-[#141923] border border-amber-500/40 shadow-sm shrink-0`}>
-        <svg viewBox="0 0 100 100" className="w-full h-full p-1.5" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="10" y="10" width="80" height="80" rx="16" stroke="#D97706" strokeWidth="4" strokeOpacity="0.5" />
-          <path d="M30 30 V70 H50" stroke="#F8FAFB" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M55 45 L70 30" stroke="#D97706" strokeWidth="6" strokeLinecap="round" />
-          <circle cx="72" cy="28" r="7" fill="#10B981" />
-          <circle cx="50" cy="65" r="5" fill="#D97706" />
-        </svg>
+      {/* Spider-Man Avatar Logo Emblem */}
+      <div className={`relative flex items-center justify-center ${iconSizes[size]} rounded-full overflow-hidden border-2 border-red-500 shadow-[0_0_12px_rgba(239,68,68,0.5)] shrink-0 bg-[#0B0809]`}>
+        <img
+          src="/logo.png"
+          alt="LWS Direct Logo"
+          className="w-full h-full object-cover object-center"
+          onError={(e) => {
+            // fallback if logo fails
+            e.target.style.display = 'none';
+          }}
+        />
       </div>
 
       {showText && (
@@ -36,7 +38,7 @@ export function Logo({ size = 'md', showText = true, className = '' }) {
           <span className={`font-bold tracking-tight leading-none text-white ${textSizes[size]}`}>
             {theme.brand_name || 'LWS Direct'}
           </span>
-          <span className="text-[9px] font-medium tracking-wider uppercase text-amber-500/90 mt-1">
+          <span className="text-[10px] font-bold tracking-wider uppercase text-red-500 mt-1">
             Learn With Sami
           </span>
         </div>

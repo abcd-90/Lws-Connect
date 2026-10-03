@@ -45,19 +45,19 @@ export function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0B0E14] flex items-center justify-center p-4 selection:bg-amber-600 selection:text-white">
-      <div className="max-w-md w-full bg-[#141923] border border-white/10 rounded-2xl p-6 sm:p-8 space-y-6 shadow-2xl relative">
+    <div className="min-h-screen bg-[#0B0809] flex items-center justify-center p-4 selection:bg-red-600 selection:text-white">
+      <div className="max-w-md w-full bg-[#140D0F] border border-red-500/30 rounded-2xl p-6 sm:p-8 space-y-6 shadow-2xl shadow-glow-red relative">
         <div className="text-center space-y-2">
           <div className="inline-block mb-1">
             <Logo size="lg" showText={false} />
           </div>
           <h2 className="text-2xl font-bold text-white tracking-tight">Create Your Account</h2>
-          <p className="text-xs text-slate-400">Join LWS Direct for 1-on-1 direct messaging with Learn With Sami</p>
+          <p className="text-xs text-slate-300">Join LWS Direct for 1-on-1 direct messaging with Learn With Sami</p>
         </div>
 
         {error && (
-          <div className="p-3.5 bg-rose-950/60 border border-rose-500/30 rounded-xl text-xs text-rose-300 flex items-center gap-2.5">
-            <AlertCircle className="w-4 h-4 shrink-0 text-rose-400" />
+          <div className="p-3.5 bg-red-950/80 border border-red-500/50 rounded-xl text-xs text-red-200 flex items-center gap-2.5">
+            <AlertCircle className="w-4 h-4 shrink-0 text-red-400" />
             <span>{error}</span>
           </div>
         )}
@@ -68,7 +68,7 @@ export function RegisterPage() {
             type="button"
             onClick={handleGoogleSignIn}
             disabled={googleLoading}
-            className="w-full py-3 px-4 bg-white hover:bg-slate-100 text-slate-900 font-bold text-xs sm:text-sm rounded-xl shadow-md flex items-center justify-center gap-3 transition-all cursor-pointer border border-slate-200"
+            className="w-full py-3 px-4 bg-white hover:bg-slate-100 text-slate-950 font-bold text-xs sm:text-sm rounded-xl shadow-md flex items-center justify-center gap-3 transition-all cursor-pointer border border-slate-200"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path
@@ -92,8 +92,8 @@ export function RegisterPage() {
           </button>
 
           <div className="relative flex items-center justify-center">
-            <div className="border-t border-white/10 w-full" />
-            <span className="bg-[#141923] px-3 text-[11px] font-semibold text-slate-500 uppercase tracking-wider absolute">
+            <div className="border-t border-red-500/20 w-full" />
+            <span className="bg-[#140D0F] px-3 text-[11px] font-semibold text-slate-400 uppercase tracking-wider absolute">
               or standard form
             </span>
           </div>
@@ -108,7 +108,7 @@ export function RegisterPage() {
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
               placeholder="e.g. Tariq Ahmad"
-              className="w-full bg-[#0B0E14] border border-white/10 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-500 transition-all"
+              className="w-full bg-[#0B0809] border border-red-500/20 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all"
             />
           </div>
 
@@ -120,7 +120,7 @@ export function RegisterPage() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="e.g. tariq_dev"
-              className="w-full bg-[#0B0E14] border border-white/10 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-500 transition-all"
+              className="w-full bg-[#0B0809] border border-red-500/20 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all"
             />
           </div>
 
@@ -132,7 +132,7 @@ export function RegisterPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="e.g. tariq@example.com"
-              className="w-full bg-[#0B0E14] border border-white/10 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-500 transition-all"
+              className="w-full bg-[#0B0809] border border-red-500/20 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all"
             />
           </div>
 
@@ -144,23 +144,23 @@ export function RegisterPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="At least 6 characters"
-              className="w-full bg-[#0B0E14] border border-white/10 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-500 transition-all"
+              className="w-full bg-[#0B0809] border border-red-500/20 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all"
             />
           </div>
 
           <button
             type="submit"
             disabled={submitting}
-            className="w-full py-3 bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs sm:text-sm rounded-xl shadow-lg flex items-center justify-center gap-2 transition-all disabled:opacity-50 cursor-pointer"
+            className="w-full py-3 bg-red-600 hover:bg-red-500 text-white font-bold text-xs sm:text-sm rounded-xl shadow-lg shadow-red-600/30 flex items-center justify-center gap-2 transition-all disabled:opacity-50 cursor-pointer"
           >
             {submitting ? 'Creating account...' : 'Create Account'}
             <ArrowRight className="w-4 h-4" />
           </button>
         </form>
 
-        <div className="text-center text-xs text-slate-400 pt-3 border-t border-white/10">
+        <div className="text-center text-xs text-slate-400 pt-3 border-t border-red-500/20">
           Already registered?{' '}
-          <Link to="/login" className="text-amber-400 hover:underline font-bold">
+          <Link to="/login" className="text-red-400 hover:underline font-bold">
             Sign In Here
           </Link>
         </div>

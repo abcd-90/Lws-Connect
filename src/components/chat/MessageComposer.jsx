@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Send, Paperclip, X, Image as ImageIcon, FileText, Loader2, Smile } from 'lucide-react';
+import { Send, Paperclip, X, Image as ImageIcon, FileText, Loader2 } from 'lucide-react';
 import { uploadFile } from '../../utils/api';
 import { useSocket } from '../../context/SocketContext';
 
@@ -16,7 +16,6 @@ export function MessageComposer({ conversationId, onSendMessage, disabled = fals
     const val = e.target.value;
     setText(val);
 
-    // Trigger socket typing event
     if (sendTypingStart && conversationId) {
       sendTypingStart(conversationId, 'User');
       if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
@@ -64,22 +63,22 @@ export function MessageComposer({ conversationId, onSendMessage, disabled = fals
   };
 
   return (
-    <div className="w-full bg-[#0F172A] border-t border-white/10 p-3 sm:p-4 transition-all">
+    <div className="w-full bg-[#140D0F] border-t border-red-500/20 p-3 sm:p-4 transition-all">
       {/* Attachment Preview Chip */}
       {attachment && (
-        <div className="mb-3 p-2 bg-slate-800/80 border border-slate-700 rounded-xl flex items-center justify-between text-xs text-slate-200 animate-fade-in">
+        <div className="mb-3 p-2 bg-[#0B0809] border border-red-500/30 rounded-xl flex items-center justify-between text-xs text-slate-200 animate-fade-in">
           <div className="flex items-center gap-2 truncate">
             {attachment.file_type.startsWith('image/') ? (
-              <ImageIcon className="w-4 h-4 text-emerald-400 shrink-0" />
+              <ImageIcon className="w-4 h-4 text-red-400 shrink-0" />
             ) : (
-              <FileText className="w-4 h-4 text-sky-400 shrink-0" />
+              <FileText className="w-4 h-4 text-red-400 shrink-0" />
             )}
             <span className="truncate font-medium">{attachment.file_name}</span>
             <span className="text-[10px] text-slate-400">({(attachment.file_size / 1024).toFixed(1)} KB)</span>
           </div>
           <button
             onClick={() => setAttachment(null)}
-            className="p-1 hover:bg-slate-700 rounded-md text-slate-400 hover:text-white"
+            className="p-1 hover:bg-white/10 rounded-md text-slate-400 hover:text-white cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
@@ -88,9 +87,9 @@ export function MessageComposer({ conversationId, onSendMessage, disabled = fals
 
       {/* Upload Error Banner */}
       {uploadError && (
-        <div className="mb-2 text-xs text-rose-400 bg-rose-950/40 border border-rose-500/20 px-3 py-1.5 rounded-lg flex items-center justify-between">
+        <div className="mb-2 text-xs text-red-400 bg-red-950/60 border border-red-500/30 px-3 py-1.5 rounded-lg flex items-center justify-between">
           <span>{uploadError}</span>
-          <button onClick={() => setUploadError(null)} className="text-slate-400 hover:text-white">
+          <button onClick={() => setUploadError(null)} className="text-slate-400 hover:text-white cursor-pointer">
             <X className="w-3.5 h-3.5" />
           </button>
         </div>
@@ -112,9 +111,9 @@ export function MessageComposer({ conversationId, onSendMessage, disabled = fals
           onClick={() => fileInputRef.current?.click()}
           disabled={uploading || disabled}
           title="Attach image or document"
-          className="p-2.5 rounded-xl bg-slate-800/70 border border-white/10 hover:bg-slate-700 text-slate-300 hover:text-white disabled:opacity-50 transition shrink-0"
+          className="p-2.5 rounded-xl bg-[#0B0809] border border-red-500/20 hover:bg-white/5 text-slate-300 hover:text-white disabled:opacity-50 transition shrink-0 cursor-pointer"
         >
-          {uploading ? <Loader2 className="w-5 h-5 animate-spin text-sky-400" /> : <Paperclip className="w-5 h-5" />}
+          {uploading ? <Loader2 className="w-5 h-5 animate-spin text-red-500" /> : <Paperclip className="w-5 h-5" />}
         </button>
 
         {/* Main Text Area */}
@@ -126,7 +125,7 @@ export function MessageComposer({ conversationId, onSendMessage, disabled = fals
             placeholder="Type your message to Sami... (Shift + Enter for newline)"
             rows={1}
             disabled={disabled}
-            className="w-full bg-[#111827] border border-white/10 focus:border-[#0284C7] focus:ring-1 focus:ring-[#0284C7] rounded-xl px-4 py-3 text-sm text-slate-100 placeholder-slate-500 resize-none outline-none max-h-32 transition"
+            className="w-full bg-[#0B0809] border border-red-500/20 focus:border-red-500 focus:ring-1 focus:ring-red-500 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 resize-none outline-none max-h-32 transition"
           />
         </div>
 
@@ -135,10 +134,10 @@ export function MessageComposer({ conversationId, onSendMessage, disabled = fals
           type="button"
           onClick={handleSend}
           disabled={(!text.trim() && !attachment) || uploading || disabled}
-          className={`btn-dynamic px-4 py-3 rounded-xl font-medium text-sm flex items-center justify-center gap-2 shadow-lg transition-all shrink-0 ${
+          className={`px-4 py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-lg transition-all shrink-0 cursor-pointer ${
             (text.trim() || attachment) && !uploading && !disabled
-              ? 'bg-gradient-to-r from-[#0284C7] to-emerald-600 hover:from-sky-500 hover:to-emerald-500 text-white shadow-sky-900/30'
-              : 'bg-slate-800 text-slate-500 cursor-not-allowed border border-white/5'
+              ? 'bg-red-600 hover:bg-red-500 text-white shadow-red-600/30'
+              : 'bg-[#0B0809] text-slate-600 cursor-not-allowed border border-red-500/10'
           }`}
         >
           <span className="hidden sm:inline">Send</span>

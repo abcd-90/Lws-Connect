@@ -16,7 +16,6 @@ export function UserChatPage() {
 
   const loadConversations = async () => {
     try {
-      // Ensure conversation exists
       await apiFetch('/chat/conversations/ensure', { method: 'POST' });
       const data = await apiFetch('/chat/conversations');
       const convList = data.conversations || [];
@@ -36,15 +35,15 @@ export function UserChatPage() {
   }, []);
 
   return (
-    <div className="h-screen w-screen bg-[#090D16] flex flex-col overflow-hidden text-slate-100 font-sans">
+    <div className="h-screen w-screen bg-[#0B0809] flex flex-col overflow-hidden text-white font-sans">
       {/* Top Application Header */}
-      <header className="h-14 bg-[#0B0F17] border-b border-white/10 px-4 flex items-center justify-between shrink-0">
+      <header className="h-14 bg-[#140D0F] border-b border-red-500/20 px-4 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-4">
           <Link to="/">
             <Logo size="sm" />
           </Link>
-          <span className="hidden sm:inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#0284C7]/20 text-[#0284C7] uppercase tracking-wider">
-            Private Community Portal
+          <span className="hidden sm:inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-red-500/10 text-red-400 border border-red-500/30 uppercase tracking-wider">
+            Private Community Workspace
           </span>
         </div>
 
@@ -52,21 +51,21 @@ export function UserChatPage() {
           {user?.role === 'super_admin' || user?.role === 'admin' ? (
             <button
               onClick={() => navigate('/lws-portal-secure-x99')}
-              className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/20 transition flex items-center gap-1.5"
+              className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/20 transition flex items-center gap-1.5 cursor-pointer"
             >
               <Shield className="w-3.5 h-3.5" /> Admin Panel
             </button>
           ) : null}
 
-          <div className="flex items-center gap-2 px-3 py-1 bg-slate-900 border border-white/10 rounded-lg text-xs text-slate-300">
-            <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="font-medium text-slate-200">{user?.full_name}</span>
+          <div className="flex items-center gap-2 px-3 py-1 bg-[#0B0809] border border-red-500/20 rounded-lg text-xs text-slate-300">
+            <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+            <span className="font-bold text-white">{user?.full_name}</span>
           </div>
 
           <button
             onClick={logout}
             title="Sign Out"
-            className="p-1.5 text-slate-400 hover:text-white hover:bg-white/5 rounded-lg transition"
+            className="p-1.5 text-slate-400 hover:text-white hover:bg-white/5 rounded-lg transition cursor-pointer"
           >
             <LogOut className="w-4 h-4" />
           </button>
@@ -94,7 +93,7 @@ export function UserChatPage() {
               currentRole="user"
             />
           ) : (
-            <div className="h-full flex items-center justify-center text-slate-500 text-sm">
+            <div className="h-full flex items-center justify-center text-slate-400 text-sm font-medium">
               Select a conversation to start messaging
             </div>
           )}
