@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Logo } from '../components/common/Logo';
 import { useAuth } from '../context/AuthContext';
-import { AlertCircle, ArrowRight, ShieldCheck } from 'lucide-react';
+import { AlertCircle, ArrowRight } from 'lucide-react';
 
 export function LoginPage() {
   const { login } = useAuth();
@@ -32,11 +32,6 @@ export function LoginPage() {
     }
   };
 
-  const handleAdminFastFill = () => {
-    setEmailOrUsername('admin@lwsconnect.com');
-    setPassword('admin123');
-  };
-
   return (
     <div className="min-h-screen bg-[#0B0809] flex items-center justify-center p-4 selection:bg-red-600 selection:text-white">
       <div className="max-w-md w-full bg-[#140D0F] border border-red-500/30 rounded-2xl p-6 sm:p-8 space-y-6 shadow-2xl shadow-glow-red relative">
@@ -63,7 +58,7 @@ export function LoginPage() {
               required
               value={emailOrUsername}
               onChange={(e) => setEmailOrUsername(e.target.value)}
-              placeholder="e.g. admin@lwsconnect.com or your email"
+              placeholder="e.g. user@gmail.com"
               className="w-full bg-[#0B0809] border border-red-500/20 rounded-xl px-4 py-3 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all"
             />
           </div>
@@ -90,22 +85,11 @@ export function LoginPage() {
           </button>
         </form>
 
-        <div className="pt-2 border-t border-red-500/20 space-y-3">
-          <button
-            type="button"
-            onClick={handleAdminFastFill}
-            className="w-full py-2.5 px-3 bg-emerald-950/40 hover:bg-emerald-900/50 border border-emerald-500/30 rounded-xl text-xs font-bold text-emerald-400 flex items-center justify-center gap-2 transition cursor-pointer"
-          >
-            <ShieldCheck className="w-4 h-4" />
-            <span>Fast Fill Admin Credentials (`admin@lwsconnect.com` / `admin123`)</span>
-          </button>
-
-          <div className="text-center text-xs text-slate-400">
-            Don't have an account?{' '}
-            <Link to="/register" className="text-red-400 hover:underline font-bold">
-              Create Account
-            </Link>
-          </div>
+        <div className="pt-2 border-t border-red-500/20 text-center text-xs text-slate-400">
+          Don't have an account?{' '}
+          <Link to="/register" className="text-red-400 hover:underline font-bold">
+            Create Account
+          </Link>
         </div>
       </div>
     </div>
